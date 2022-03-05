@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Text;
 using SysBot.Base;
+using System.Diagnostics;
 using static SysBot.Base.SwitchOffsetType;
 
 namespace PLARNGGui
@@ -151,6 +152,77 @@ namespace PLARNGGui
             var offsetBytes = await ReadBytesFromCmdAsync(SwitchCommand.PointerRelative(jumps), sizeof(ulong)).ConfigureAwait(false);
             Array.Reverse(offsetBytes, 0, 8);
             return BitConverter.ToUInt64(offsetBytes, 0);
+        }
+        public async Task Click(SwitchButton b, int delay)
+        {
+            await SendAsync(SwitchCommand.Click(b, true)).ConfigureAwait(false);
+            await Task.Delay(delay).ConfigureAwait(false);
+        }
+
+        public async Task PressAndHold(SwitchButton b, int hold, int delay)
+        {
+            await SendAsync(SwitchCommand.Hold(b, true)).ConfigureAwait(false);
+            await Task.Delay(hold).ConfigureAwait(false);
+            await SendAsync(SwitchCommand.Release(b, true)).ConfigureAwait(false);
+            await Task.Delay(delay).ConfigureAwait(false);
+        }
+
+        public async Task DaisyChainCommands(int delay, IEnumerable<SwitchButton> buttons)
+        {
+            SwitchCommand.Configure(SwitchConfigureParameter.mainLoopSleepTime, delay, true);
+            var commands = buttons.Select(z => SwitchCommand.Click(z, true)).ToArray();
+            var chain = commands.SelectMany(x => x).ToArray();
+            await SendAsync(chain).ConfigureAwait(false);
+            SwitchCommand.Configure(SwitchConfigureParameter.mainLoopSleepTime, 0, true);
+        }
+
+        public async Task SetStick(SwitchStick stick, short x, short y, int delay)
+        {
+            var cmd = SwitchCommand.SetStick(stick, x, y, true);
+            await SendAsync(cmd).ConfigureAwait(false);
+            await Task.Delay(delay).ConfigureAwait(false);
+        }
+
+        public async Task DetachController()
+        {
+            await SendAsync(SwitchCommand.DetachController(true)).ConfigureAwait(false);
+        }
+
+        public async Task SetScreen(ScreenState state)
+        {
+            await SendAsync(SwitchCommand.SetScreen(state, true)).ConfigureAwait(false);
+        }
+
+        public async Task EchoCommands(bool value)
+        {
+            var cmd = SwitchCommand.Configure(SwitchConfigureParameter.echoCommands, value ? 1 : 0, true);
+            await SendAsync(cmd).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc cref="ReadUntilChanged(ulong,byte[],int,int,bool,bool,CancellationToken)"/>
+        public async Task<bool> ReadUntilChanged(uint offset, byte[] comparison, int waitms, int waitInterval, bool match) =>
+            await ReadUntilChanged(offset, comparison, waitms, waitInterval, match, false).ConfigureAwait(false);
+
+        /// <summary>
+        /// Reads an offset until it changes to either match or differ from the comparison value.
+        /// </summary>
+        /// <returns>If <see cref="match"/> is set to true, then the function returns true when the offset matches the given value.<br>Otherwise, it returns true when the offset no longer matches the given value.</br></returns>
+        public async Task<bool> ReadUntilChanged(ulong offset, byte[] comparison, int waitms, int waitInterval, bool match, bool absolute)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            do
+            {
+                var task = absolute
+                    ? ReadBytesAbsoluteAsync(offset, comparison.Length)
+                    : ReadBytesAsync((uint)offset, comparison.Length);
+                var result = await task.ConfigureAwait(false);
+                if (match == result.SequenceEqual(comparison))
+                    return true;
+
+                await Task.Delay(waitInterval).ConfigureAwait(false);
+            } while (sw.ElapsedMilliseconds < waitms);
+            return false;
         }
     }
 }
