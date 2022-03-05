@@ -31,6 +31,7 @@ namespace PLARNGGui
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.StandardSpawnstab = new System.Windows.Forms.TabPage();
+            this.calculatebutton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.pokemonselection = new System.Windows.Forms.ComboBox();
             this.Timeofdayselection = new System.Windows.Forms.ComboBox();
@@ -53,10 +54,30 @@ namespace PLARNGGui
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.IP = new System.Windows.Forms.TextBox();
             this.connect = new System.Windows.Forms.Button();
-            this.Inject = new System.Windows.Forms.Button();
-            this.calculatebutton = new System.Windows.Forms.Button();
+            this.InjectStandard = new System.Windows.Forms.Button();
+            this.Disconnect = new System.Windows.Forms.Button();
+            this.OutbreakDisplay = new System.Windows.Forms.RichTextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.outbreakgroupid = new System.Windows.Forms.TextBox();
+            this.AlphaSearch = new System.Windows.Forms.RadioButton();
+            this.outbreakcalculate = new System.Windows.Forms.Button();
+            this.outbreakread = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.outbreakseedtoinject = new System.Windows.Forms.TextBox();
+            this.outbreakinject = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.outbreakmaxadv = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.outbreakShinyrolls = new System.Windows.Forms.TextBox();
+            this.outbreakGuarIVs = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.outbreakmap = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.outbreakspawncount = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.StandardSpawnstab.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -73,6 +94,7 @@ namespace PLARNGGui
             // 
             this.StandardSpawnstab.BackColor = System.Drawing.Color.WhiteSmoke;
             this.StandardSpawnstab.Controls.Add(this.calculatebutton);
+            this.StandardSpawnstab.Controls.Add(this.InjectStandard);
             this.StandardSpawnstab.Controls.Add(this.label9);
             this.StandardSpawnstab.Controls.Add(this.pokemonselection);
             this.StandardSpawnstab.Controls.Add(this.Timeofdayselection);
@@ -98,6 +120,16 @@ namespace PLARNGGui
             this.StandardSpawnstab.Size = new System.Drawing.Size(768, 369);
             this.StandardSpawnstab.TabIndex = 0;
             this.StandardSpawnstab.Text = "StandardSpawns";
+            // 
+            // calculatebutton
+            // 
+            this.calculatebutton.Location = new System.Drawing.Point(369, 273);
+            this.calculatebutton.Name = "calculatebutton";
+            this.calculatebutton.Size = new System.Drawing.Size(105, 23);
+            this.calculatebutton.TabIndex = 20;
+            this.calculatebutton.Text = "Calculate";
+            this.calculatebutton.UseVisualStyleBackColor = true;
+            this.calculatebutton.Click += new System.EventHandler(this.calculatebutton_Click);
             // 
             // label9
             // 
@@ -268,13 +300,32 @@ namespace PLARNGGui
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.Controls.Add(this.outbreakspawncount);
+            this.tabPage2.Controls.Add(this.label16);
+            this.tabPage2.Controls.Add(this.outbreakmap);
+            this.tabPage2.Controls.Add(this.label15);
+            this.tabPage2.Controls.Add(this.label14);
+            this.tabPage2.Controls.Add(this.outbreakGuarIVs);
+            this.tabPage2.Controls.Add(this.outbreakShinyrolls);
+            this.tabPage2.Controls.Add(this.label13);
+            this.tabPage2.Controls.Add(this.outbreakmaxadv);
+            this.tabPage2.Controls.Add(this.label12);
+            this.tabPage2.Controls.Add(this.outbreakinject);
+            this.tabPage2.Controls.Add(this.outbreakseedtoinject);
+            this.tabPage2.Controls.Add(this.label11);
+            this.tabPage2.Controls.Add(this.outbreakread);
+            this.tabPage2.Controls.Add(this.outbreakcalculate);
+            this.tabPage2.Controls.Add(this.AlphaSearch);
+            this.tabPage2.Controls.Add(this.outbreakgroupid);
+            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.OutbreakDisplay);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(768, 369);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Text = "Outbreaks";
             // 
             // IP
             // 
@@ -294,32 +345,202 @@ namespace PLARNGGui
             this.connect.UseVisualStyleBackColor = true;
             this.connect.Click += new System.EventHandler(this.connect_Click);
             // 
-            // Inject
+            // InjectStandard
             // 
-            this.Inject.Location = new System.Drawing.Point(251, 9);
-            this.Inject.Name = "Inject";
-            this.Inject.Size = new System.Drawing.Size(105, 23);
-            this.Inject.TabIndex = 4;
-            this.Inject.Text = "Inject";
-            this.Inject.UseVisualStyleBackColor = true;
-            this.Inject.Click += new System.EventHandler(this.Inject_Click);
+            this.InjectStandard.Location = new System.Drawing.Point(487, 273);
+            this.InjectStandard.Name = "InjectStandard";
+            this.InjectStandard.Size = new System.Drawing.Size(105, 23);
+            this.InjectStandard.TabIndex = 4;
+            this.InjectStandard.Text = "Inject";
+            this.InjectStandard.UseVisualStyleBackColor = true;
+            this.InjectStandard.Click += new System.EventHandler(this.Inject_Click);
             // 
-            // calculatebutton
+            // Disconnect
             // 
-            this.calculatebutton.Location = new System.Drawing.Point(369, 273);
-            this.calculatebutton.Name = "calculatebutton";
-            this.calculatebutton.Size = new System.Drawing.Size(105, 23);
-            this.calculatebutton.TabIndex = 20;
-            this.calculatebutton.Text = "Calculate";
-            this.calculatebutton.UseVisualStyleBackColor = true;
-            this.calculatebutton.Click += new System.EventHandler(this.calculatebutton_Click);
+            this.Disconnect.Location = new System.Drawing.Point(251, 9);
+            this.Disconnect.Name = "Disconnect";
+            this.Disconnect.Size = new System.Drawing.Size(89, 23);
+            this.Disconnect.TabIndex = 5;
+            this.Disconnect.Text = "Disconnect";
+            this.Disconnect.UseVisualStyleBackColor = true;
+            this.Disconnect.Click += new System.EventHandler(this.Disconnect_Click);
+            // 
+            // OutbreakDisplay
+            // 
+            this.OutbreakDisplay.Location = new System.Drawing.Point(6, 6);
+            this.OutbreakDisplay.Name = "OutbreakDisplay";
+            this.OutbreakDisplay.ReadOnly = true;
+            this.OutbreakDisplay.Size = new System.Drawing.Size(362, 357);
+            this.OutbreakDisplay.TabIndex = 0;
+            this.OutbreakDisplay.Text = "";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(374, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(50, 13);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Group ID";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // outbreakgroupid
+            // 
+            this.outbreakgroupid.Location = new System.Drawing.Point(430, 6);
+            this.outbreakgroupid.Name = "outbreakgroupid";
+            this.outbreakgroupid.Size = new System.Drawing.Size(60, 20);
+            this.outbreakgroupid.TabIndex = 2;
+            this.outbreakgroupid.Text = "0";
+            // 
+            // AlphaSearch
+            // 
+            this.AlphaSearch.AutoSize = true;
+            this.AlphaSearch.Location = new System.Drawing.Point(673, 278);
+            this.AlphaSearch.Name = "AlphaSearch";
+            this.AlphaSearch.Size = new System.Drawing.Size(89, 17);
+            this.AlphaSearch.TabIndex = 3;
+            this.AlphaSearch.TabStop = true;
+            this.AlphaSearch.Text = "Alpha Search";
+            this.AlphaSearch.UseVisualStyleBackColor = true;
+            // 
+            // outbreakcalculate
+            // 
+            this.outbreakcalculate.Location = new System.Drawing.Point(496, 275);
+            this.outbreakcalculate.Name = "outbreakcalculate";
+            this.outbreakcalculate.Size = new System.Drawing.Size(75, 23);
+            this.outbreakcalculate.TabIndex = 4;
+            this.outbreakcalculate.Text = "Calculate";
+            this.outbreakcalculate.UseVisualStyleBackColor = true;
+            this.outbreakcalculate.Click += new System.EventHandler(this.outbreakcalculate_Click);
+            // 
+            // outbreakread
+            // 
+            this.outbreakread.Location = new System.Drawing.Point(415, 275);
+            this.outbreakread.Name = "outbreakread";
+            this.outbreakread.Size = new System.Drawing.Size(75, 23);
+            this.outbreakread.TabIndex = 5;
+            this.outbreakread.Text = "Read ";
+            this.outbreakread.UseVisualStyleBackColor = true;
+            this.outbreakread.Click += new System.EventHandler(this.outbreakread_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(374, 38);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Seed To Inject";
+            // 
+            // outbreakseedtoinject
+            // 
+            this.outbreakseedtoinject.Location = new System.Drawing.Point(457, 35);
+            this.outbreakseedtoinject.Name = "outbreakseedtoinject";
+            this.outbreakseedtoinject.Size = new System.Drawing.Size(134, 20);
+            this.outbreakseedtoinject.TabIndex = 7;
+            this.outbreakseedtoinject.Text = "0x0";
+            // 
+            // outbreakinject
+            // 
+            this.outbreakinject.Location = new System.Drawing.Point(577, 275);
+            this.outbreakinject.Name = "outbreakinject";
+            this.outbreakinject.Size = new System.Drawing.Size(75, 23);
+            this.outbreakinject.TabIndex = 8;
+            this.outbreakinject.Text = "Inject";
+            this.outbreakinject.UseVisualStyleBackColor = true;
+            this.outbreakinject.Click += new System.EventHandler(this.outbreakinject_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(374, 65);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(78, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Max Advances";
+            // 
+            // outbreakmaxadv
+            // 
+            this.outbreakmaxadv.Location = new System.Drawing.Point(457, 62);
+            this.outbreakmaxadv.Name = "outbreakmaxadv";
+            this.outbreakmaxadv.Size = new System.Drawing.Size(75, 20);
+            this.outbreakmaxadv.TabIndex = 10;
+            this.outbreakmaxadv.Text = "100";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(374, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(59, 13);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "Shiny Rolls";
+            // 
+            // outbreakShinyrolls
+            // 
+            this.outbreakShinyrolls.Location = new System.Drawing.Point(439, 85);
+            this.outbreakShinyrolls.Name = "outbreakShinyrolls";
+            this.outbreakShinyrolls.Size = new System.Drawing.Size(42, 20);
+            this.outbreakShinyrolls.TabIndex = 12;
+            this.outbreakShinyrolls.Text = "26";
+            // 
+            // outbreakGuarIVs
+            // 
+            this.outbreakGuarIVs.Location = new System.Drawing.Point(457, 111);
+            this.outbreakGuarIVs.Name = "outbreakGuarIVs";
+            this.outbreakGuarIVs.Size = new System.Drawing.Size(51, 20);
+            this.outbreakGuarIVs.TabIndex = 13;
+            this.outbreakGuarIVs.Text = "3";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(370, 114);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(81, 13);
+            this.label14.TabIndex = 14;
+            this.label14.Text = "Guaranteed IVs";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(370, 142);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(28, 13);
+            this.label15.TabIndex = 15;
+            this.label15.Text = "Map";
+            // 
+            // outbreakmap
+            // 
+            this.outbreakmap.FormattingEnabled = true;
+            this.outbreakmap.Location = new System.Drawing.Point(404, 137);
+            this.outbreakmap.Name = "outbreakmap";
+            this.outbreakmap.Size = new System.Drawing.Size(103, 21);
+            this.outbreakmap.TabIndex = 16;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(530, 9);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(45, 13);
+            this.label16.TabIndex = 17;
+            this.label16.Text = "Spawns";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
+            // 
+            // outbreakspawncount
+            // 
+            this.outbreakspawncount.Location = new System.Drawing.Point(577, 6);
+            this.outbreakspawncount.Name = "outbreakspawncount";
+            this.outbreakspawncount.Size = new System.Drawing.Size(42, 20);
+            this.outbreakspawncount.TabIndex = 18;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Inject);
+            this.Controls.Add(this.Disconnect);
             this.Controls.Add(this.connect);
             this.Controls.Add(this.IP);
             this.Controls.Add(this.tabControl1);
@@ -328,6 +549,8 @@ namespace PLARNGGui
             this.tabControl1.ResumeLayout(false);
             this.StandardSpawnstab.ResumeLayout(false);
             this.StandardSpawnstab.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,7 +576,7 @@ namespace PLARNGGui
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.TextBox groupid;
         public System.Windows.Forms.Button connect;
-        public System.Windows.Forms.Button Inject;
+        public System.Windows.Forms.Button InjectStandard;
         public System.Windows.Forms.Label label7;
         public System.Windows.Forms.ComboBox weatherselection;
         public System.Windows.Forms.ComboBox Timeofdayselection;
@@ -361,6 +584,26 @@ namespace PLARNGGui
         public System.Windows.Forms.Label label9;
         public System.Windows.Forms.ComboBox pokemonselection;
         private System.Windows.Forms.Button calculatebutton;
+        private System.Windows.Forms.Button Disconnect;
+        public System.Windows.Forms.RichTextBox OutbreakDisplay;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button outbreakinject;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button outbreakread;
+        private System.Windows.Forms.Button outbreakcalculate;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        public System.Windows.Forms.TextBox outbreakseedtoinject;
+        public System.Windows.Forms.RadioButton AlphaSearch;
+        public System.Windows.Forms.TextBox outbreakgroupid;
+        public System.Windows.Forms.TextBox outbreakShinyrolls;
+        public System.Windows.Forms.TextBox outbreakmaxadv;
+        public System.Windows.Forms.ComboBox outbreakmap;
+        public System.Windows.Forms.TextBox outbreakGuarIVs;
+        private System.Windows.Forms.Label label16;
+        public System.Windows.Forms.TextBox outbreakspawncount;
     }
 }
 
