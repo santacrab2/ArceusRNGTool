@@ -134,7 +134,7 @@ namespace PLARNGGui
                 var rng = new Xoroshiro128Plus(generator_seed);
                 var EncounterSlotRand = (float)(encslotsum * (float)((float)rng.Next() * 5.421e-20f)) + 0.0;
                 (shiny, encryption_constant, pid, ivs, ability, gender, nature, shinyseed) = GenerateFromSeed(rng.Next(), Convert.ToInt32(Program.main.ShinyRollstext.Text), Convert.ToInt32(Program.main.guaranteedivs.Text));
-                if (encmin >= (float)EncounterSlotRand || (float)EncounterSlotRand > encmax)
+                if (encmin >= (float)EncounterSlotRand && (float)EncounterSlotRand > encmax)
                 {
                     continue;
                 }
