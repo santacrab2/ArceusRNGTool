@@ -51,7 +51,7 @@ namespace PLARNGGui
             this.SeedToInject = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupid = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.Outbreaktab = new System.Windows.Forms.TabPage();
             this.IP = new System.Windows.Forms.TextBox();
             this.connect = new System.Windows.Forms.Button();
             this.InjectStandard = new System.Windows.Forms.Button();
@@ -75,15 +75,22 @@ namespace PLARNGGui
             this.outbreakmap = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.outbreakspawncount = new System.Windows.Forms.TextBox();
+            this.MMOtab = new System.Windows.Forms.TabPage();
+            this.MassiveDisplay = new System.Windows.Forms.RichTextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.MassiveMap = new System.Windows.Forms.ComboBox();
+            this.MassiveRead = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.StandardSpawnstab.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.Outbreaktab.SuspendLayout();
+            this.MMOtab.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.StandardSpawnstab);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.Outbreaktab);
+            this.tabControl1.Controls.Add(this.MMOtab);
             this.tabControl1.Location = new System.Drawing.Point(12, 43);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -298,34 +305,34 @@ namespace PLARNGGui
             this.groupid.Text = "0";
             this.groupid.TextChanged += new System.EventHandler(this.groupid_TextChanged);
             // 
-            // tabPage2
+            // Outbreaktab
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage2.Controls.Add(this.outbreakspawncount);
-            this.tabPage2.Controls.Add(this.label16);
-            this.tabPage2.Controls.Add(this.outbreakmap);
-            this.tabPage2.Controls.Add(this.label15);
-            this.tabPage2.Controls.Add(this.label14);
-            this.tabPage2.Controls.Add(this.outbreakGuarIVs);
-            this.tabPage2.Controls.Add(this.outbreakShinyrolls);
-            this.tabPage2.Controls.Add(this.label13);
-            this.tabPage2.Controls.Add(this.outbreakmaxadv);
-            this.tabPage2.Controls.Add(this.label12);
-            this.tabPage2.Controls.Add(this.outbreakinject);
-            this.tabPage2.Controls.Add(this.outbreakseedtoinject);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Controls.Add(this.outbreakread);
-            this.tabPage2.Controls.Add(this.outbreakcalculate);
-            this.tabPage2.Controls.Add(this.AlphaSearch);
-            this.tabPage2.Controls.Add(this.outbreakgroupid);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.OutbreakDisplay);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(768, 369);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Outbreaks";
+            this.Outbreaktab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Outbreaktab.Controls.Add(this.outbreakspawncount);
+            this.Outbreaktab.Controls.Add(this.label16);
+            this.Outbreaktab.Controls.Add(this.outbreakmap);
+            this.Outbreaktab.Controls.Add(this.label15);
+            this.Outbreaktab.Controls.Add(this.label14);
+            this.Outbreaktab.Controls.Add(this.outbreakGuarIVs);
+            this.Outbreaktab.Controls.Add(this.outbreakShinyrolls);
+            this.Outbreaktab.Controls.Add(this.label13);
+            this.Outbreaktab.Controls.Add(this.outbreakmaxadv);
+            this.Outbreaktab.Controls.Add(this.label12);
+            this.Outbreaktab.Controls.Add(this.outbreakinject);
+            this.Outbreaktab.Controls.Add(this.outbreakseedtoinject);
+            this.Outbreaktab.Controls.Add(this.label11);
+            this.Outbreaktab.Controls.Add(this.outbreakread);
+            this.Outbreaktab.Controls.Add(this.outbreakcalculate);
+            this.Outbreaktab.Controls.Add(this.AlphaSearch);
+            this.Outbreaktab.Controls.Add(this.outbreakgroupid);
+            this.Outbreaktab.Controls.Add(this.label10);
+            this.Outbreaktab.Controls.Add(this.OutbreakDisplay);
+            this.Outbreaktab.Location = new System.Drawing.Point(4, 22);
+            this.Outbreaktab.Name = "Outbreaktab";
+            this.Outbreaktab.Padding = new System.Windows.Forms.Padding(3);
+            this.Outbreaktab.Size = new System.Drawing.Size(768, 369);
+            this.Outbreaktab.TabIndex = 1;
+            this.Outbreaktab.Text = "Outbreaks";
             // 
             // IP
             // 
@@ -535,6 +542,56 @@ namespace PLARNGGui
             this.outbreakspawncount.Size = new System.Drawing.Size(42, 20);
             this.outbreakspawncount.TabIndex = 18;
             // 
+            // MMOtab
+            // 
+            this.MMOtab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.MMOtab.Controls.Add(this.MassiveRead);
+            this.MMOtab.Controls.Add(this.MassiveMap);
+            this.MMOtab.Controls.Add(this.label17);
+            this.MMOtab.Controls.Add(this.MassiveDisplay);
+            this.MMOtab.Location = new System.Drawing.Point(4, 22);
+            this.MMOtab.Name = "MMOtab";
+            this.MMOtab.Padding = new System.Windows.Forms.Padding(3);
+            this.MMOtab.Size = new System.Drawing.Size(768, 369);
+            this.MMOtab.TabIndex = 2;
+            this.MMOtab.Text = "Massive Outbreaks";
+            // 
+            // MassiveDisplay
+            // 
+            this.MassiveDisplay.Location = new System.Drawing.Point(6, 6);
+            this.MassiveDisplay.Name = "MassiveDisplay";
+            this.MassiveDisplay.ReadOnly = true;
+            this.MassiveDisplay.Size = new System.Drawing.Size(373, 357);
+            this.MassiveDisplay.TabIndex = 0;
+            this.MassiveDisplay.Text = "";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(385, 9);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(28, 13);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "Map";
+            // 
+            // MassiveMap
+            // 
+            this.MassiveMap.FormattingEnabled = true;
+            this.MassiveMap.Location = new System.Drawing.Point(419, 6);
+            this.MassiveMap.Name = "MassiveMap";
+            this.MassiveMap.Size = new System.Drawing.Size(121, 21);
+            this.MassiveMap.TabIndex = 2;
+            // 
+            // MassiveRead
+            // 
+            this.MassiveRead.Location = new System.Drawing.Point(401, 261);
+            this.MassiveRead.Name = "MassiveRead";
+            this.MassiveRead.Size = new System.Drawing.Size(100, 23);
+            this.MassiveRead.TabIndex = 3;
+            this.MassiveRead.Text = "Read";
+            this.MassiveRead.UseVisualStyleBackColor = true;
+            this.MassiveRead.Click += new System.EventHandler(this.MassiveRead_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -549,8 +606,10 @@ namespace PLARNGGui
             this.tabControl1.ResumeLayout(false);
             this.StandardSpawnstab.ResumeLayout(false);
             this.StandardSpawnstab.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.Outbreaktab.ResumeLayout(false);
+            this.Outbreaktab.PerformLayout();
+            this.MMOtab.ResumeLayout(false);
+            this.MMOtab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,7 +619,7 @@ namespace PLARNGGui
 
         public System.Windows.Forms.TabControl tabControl1;
         public System.Windows.Forms.TabPage StandardSpawnstab;
-        public System.Windows.Forms.TabPage tabPage2;
+        public System.Windows.Forms.TabPage Outbreaktab;
         public System.Windows.Forms.TextBox IP;
         public System.Windows.Forms.ComboBox MapSelection;
         public System.Windows.Forms.Label label6;
@@ -604,6 +663,11 @@ namespace PLARNGGui
         public System.Windows.Forms.TextBox outbreakGuarIVs;
         private System.Windows.Forms.Label label16;
         public System.Windows.Forms.TextBox outbreakspawncount;
+        private System.Windows.Forms.TabPage MMOtab;
+        private System.Windows.Forms.Label label17;
+        public System.Windows.Forms.ComboBox MassiveMap;
+        public System.Windows.Forms.RichTextBox MassiveDisplay;
+        private System.Windows.Forms.Button MassiveRead;
     }
 }
 

@@ -24,6 +24,7 @@ namespace PLARNGGui
             weatherselection.DataSource = Enum.GetValues(typeof(Enums.Weather));
             Timeofdayselection.DataSource = Enum.GetValues(typeof(Enums.Time));
             outbreakmap.DataSource = Enum.GetValues(typeof(Enums.Maps));
+            MassiveMap.DataSource = Enum.GetValues(typeof(Enums.Maps));
       
 
         }
@@ -186,6 +187,11 @@ namespace PLARNGGui
             var seedlong = Convert.ToUInt64(Program.main.SeedToInject.Text, 16);
             await routes.WriteBytesAbsoluteAsync(BitConverter.GetBytes(Convert.ToUInt64(Program.main.outbreakseedtoinject.Text, 16)), SpawnerOff);
             Program.main.OutbreakDisplay.AppendText("Injecting: " + string.Format("{0:X}", Program.main.outbreakseedtoinject.Text) + "\n");
+        }
+
+        private void MassiveRead_Click(object sender, EventArgs e)
+        {
+            rngroutes.ReadMassOutbreak();
         }
     }
 }

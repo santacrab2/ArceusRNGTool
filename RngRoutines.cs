@@ -351,6 +351,65 @@ namespace PLARNGGui
             }
             
         }
+        public void ReadMassOutbreak()
+        {
+            for(int i = 0; i < 15; i++)
+            {
+                var speciespointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + i * 0x90 + 0xb80 * 3 };
+                var speciesoff = Main.routes.PointerAll(speciespointer).Result;
+                int species = BitConverter.ToInt16(Main.routes.ReadBytesAbsoluteAsync(speciesoff, 2).Result,0);
+                Program.main.MassiveDisplay.AppendText($"{(Species)species}\n");
+                if(species != 0)
+                {
+                    bool shiny = false;
+                    ulong encryption_constant = new ulong();
+                    ulong pid = new ulong();
+                    int[] ivs = new int[6];
+                    ulong ability = new ulong();
+                    ulong gender = new ulong();
+                    ulong nature = new ulong();
+                    ulong shinyseed = new ulong();
+                    var spawnerpointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + i * 0x90 + 0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem + 0x44 };
+                    var spawneroff = Main.routes.PointerAll(spawnerpointer).Result;
+                    var groupseed = BitConverter.ToUInt64( Main.routes.ReadBytesAbsoluteAsync(spawneroff, 8).Result,0);
+                    var maxspawnspointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + i * 0x90 + 0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem + 0x4c };
+                    var maxspawnoff = Main.routes.PointerAll(maxspawnspointer).Result;
+                    var maxspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(maxspawnoff, 4).Result,0);
+                    Program.main.MassiveDisplay.AppendText($"Max spawns: {maxspawns}");
+                    var currspawnspointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + i * 0x90 + 0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem + 0x50 };
+                    var currspawnoff = Main.routes.PointerAll(currspawnspointer).Result;
+                    var currspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(currspawnoff,4).Result,0);
+                    Program.main.MassiveDisplay.AppendText($"Current spawns: {currspawns}");
+                    var mainrng = new Xoroshiro128Plus(groupseed);
+                    for (int h = 0; h < 4; h++)
+                    {
+                        var generatorseed = mainrng.Next();
+                        mainrng.Next();
+                        var fixedrng = new Xoroshiro128Plus(generatorseed);
+                        fixedrng.Next();
+                        var fixedseed = fixedrng.Next();
+                        (shiny, encryption_constant, pid, ivs, ability, gender, nature, shinyseed) = GenerateFromSeed(fixedseed, 13,0);
+                        Program.main.StandardSpawnsDisplay.AppendText($"Initial Spawn {i}\nShiny:{shiny}\nEC:{string.Format("{0:X}", encryption_constant)}\nPID:{string.Format("{0:X}", pid)}\nIVs:{ivs[0]}/{ivs[1]}/{ivs[2]}/{ivs[3]}/{ivs[4]}/{ivs[5]}\nAbility:{ability}\nGender:{gender}\nNature{((Nature)nature)}\nShinySeed{string.Format("0x{0:X}", generatorseed)}\n");
+                    }
+                    groupseed = mainrng.Next();
+                    mainrng = new Xoroshiro128Plus(groupseed);
+                    var respawnrng = new Xoroshiro128Plus(groupseed);
+                    for(int p=1; p < maxspawns - 3; p++)
+                    {
+                        var generator_seed = respawnrng.Next();
+                        respawnrng.Next();
+                        respawnrng = new Xoroshiro128Plus(respawnrng.Next());
+                        var fixed_rng = new Xoroshiro128Plus(generator_seed);
+                        fixed_rng.Next();
+                        var fixed_seed = fixed_rng.Next();
+                        (shiny, encryption_constant, pid, ivs, ability, gender, nature, shinyseed) = GenerateFromSeed(fixed_seed, 13, 0);
+                        Program.main.StandardSpawnsDisplay.AppendText($"Initial Spawn {i}\nShiny:{shiny}\nEC:{string.Format("{0:X}", encryption_constant)}\nPID:{string.Format("{0:X}", pid)}\nIVs:{ivs[0]}/{ivs[1]}/{ivs[2]}/{ivs[3]}/{ivs[4]}/{ivs[5]}\nAbility:{ability}\nGender:{gender}\nNature{((Nature)nature)}\nShinySeed{string.Format("0x{0:X}", generator_seed)}\n");
+                    }
+
+
+                }
+            }
+        }
     }
 }
 
