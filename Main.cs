@@ -193,5 +193,19 @@ namespace PLARNGGui
         {
             rngroutes.ReadMassOutbreak();
         }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void MMOInject_Click(object sender, EventArgs e)
+        {
+            var groupid = Convert.ToInt32(Program.main.MMOgroupid.Text);
+            var spawnerpointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (groupid * 0x90) + (0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem) + 0x44 };
+            var spawneroff = Main.routes.PointerAll(spawnerpointer).Result;
+            await routes.WriteBytesAbsoluteAsync(BitConverter.GetBytes(Convert.ToUInt64(Program.main.MMOSeedtoinject.Text, 16)), spawneroff);
+            Program.main.MassiveDisplay.AppendText("Injecting: " + string.Format("{0:X}", Program.main.MMOSeedtoinject.Text) + "\n");
+        }
     }
 }
