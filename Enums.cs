@@ -32,12 +32,12 @@ namespace PLARNGGui
         }
         public enum Maps
         {
-            None=0,
-            ObsidianFieldlands = 1,
-            CrimsonMirelands = 2,
-            CobaltCoastlands = 3,
-            CoronetHighlands = 4,
-            AlabasterIcelands = 5
+            
+            ObsidianFieldlands,
+            CrimsonMirelands,
+            CobaltCoastlands,
+            CoronetHighlands,
+            AlabasterIcelands
         }
     }
     
