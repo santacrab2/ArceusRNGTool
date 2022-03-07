@@ -194,8 +194,12 @@ namespace PLARNGGui
                 return;
             }
             Program.main.outbreakgroupid.Text = $"{group_id}";
-            var coords = spawnmap[$"{group_id}"]["coords"];
-            Program.main.OutbreakDisplay.AppendText($"Group: {group_id}\nX: {coords[0]}\nY: {coords[1]}\nZ: {coords[2]}\n");
+            try
+            {
+                var coords = spawnmap[$"{group_id}"]["coords"];
+                Program.main.OutbreakDisplay.AppendText($"Group: {group_id}\nX: {coords[0]}\nY: {coords[1]}\nZ: {coords[2]}\n");
+            }
+            catch { }
             SpawnerOffpoint = new long[] { 0x42a6ee0, 0x330, 0x70 + group_id * 0x440 + 0x20 };
             SpawnerOff = Main.routes.PointerAll(SpawnerOffpoint).Result;
             var GeneratorSeed = Main.routes.ReadBytesAbsoluteAsync(SpawnerOff, 8).Result;
@@ -388,7 +392,7 @@ namespace PLARNGGui
                     var spawncoordx = BitConverter.ToUInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x14, 4).Result, 0);
                     var spawncoordy = BitConverter.ToUInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x10, 4).Result, 0);
                     var spawncoordz = BitConverter.ToUInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x0C, 4).Result, 0);
-                    Program.main.MassiveDisplay.AppendText($"Coordinates: X: {spawncoordx} Y: {spawncoordy} Z: {spawncoordz}\n");
+                    Program.main.MassiveDisplay.AppendText($"Coordinates: X: {BitConverter.Int64BitsToDouble(spawncoordx)} Y: {BitConverter.Int64BitsToDouble(spawncoordy)} Z: {BitConverter.Int64BitsToDouble(spawncoordz)}\n");
                     var groupseed = BitConverter.ToUInt64( Main.routes.ReadBytesAbsoluteAsync(Outbreakoff+0x44, 8).Result,0);
                     var maxspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff+0x4c, 4).Result,0);
                     Program.main.MassiveDisplay.AppendText($"Max spawns: {maxspawns}\n");

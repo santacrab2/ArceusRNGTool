@@ -209,11 +209,14 @@ namespace PLARNGGui
         {
             var playerlocationptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
             var playerlocationoff = routes.PointerAll(playerlocationptr).Result;
-            var CoordX = uint.Parse(Program.main.CoordX.Text);
+            var doubleCoordX = Convert.ToDouble(Program.main.CoordX.Text);
+            var CoordX = BitConverter.DoubleToInt64Bits(doubleCoordX);
             byte[] X = BitConverter.GetBytes(CoordX);
-            var CoordY = uint.Parse(Program.main.CoordY.Text);
+            var doubleCoordY = Convert.ToDouble(Program.main.CoordY.Text);
+            var CoordY = BitConverter.DoubleToInt64Bits(doubleCoordY);
             byte[] Y = BitConverter.GetBytes(CoordY);
-            var CoordZ = uint.Parse(Program.main.CoordZ.Text);
+            var doubleCoordZ = Convert.ToDouble(Program.main.CoordZ.Text);
+            var CoordZ = BitConverter.DoubleToInt64Bits(doubleCoordZ);
             byte[] Z = BitConverter.GetBytes(CoordZ);
 
             await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
