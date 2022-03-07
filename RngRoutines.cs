@@ -409,10 +409,11 @@ namespace PLARNGGui
                         
                         (shiny, encryption_constant, pid, ivs, ability, gender, nature, shinyseed) = GenerateFromSeed(fixed_seed, 13, 0);
                         if(shiny)
-                            Program.main.MassiveDisplay.AppendText($"Respawn {p}\nShiny:{shiny}\nEC:{string.Format("{0:X}", encryption_constant)}\nPID:{string.Format("{0:X}", pid)}\nIVs:{ivs[0]}/{ivs[1]}/{ivs[2]}/{ivs[3]}/{ivs[4]}/{ivs[5]}\nAbility:{ability}\nGender:{gender}\nNature{((Nature)nature)}\nShinySeed{string.Format("0x{0:X}", fixed_seed)}\n\n");
+                            Program.main.MassiveDisplay.AppendText($"Respawn {p}\nShiny:{shiny}\nEC:{string.Format("{0:X}", encryption_constant)}\nPID:{string.Format("{0:X}", pid)}\nIVs:{ivs[0]}/{ivs[1]}/{ivs[2]}/{ivs[3]}/{ivs[4]}/{ivs[5]}\nAbility:{ability}\nGender:{gender}\nNature{((Nature)nature)}\nShinySeed{string.Format("0x{0:X}", generator_seed)}\n\n");
                     }
                     if(bonusround != 0)
                     {
+                        Program.main.MassiveDisplay.AppendText($"group {i} has a bonus round.\n\n");
                         var bonusseed = respawnrng.Next() - 0x82A2B175229D6A5B & 0xFFFFFFFFFFFFFFFF;
                         mainrng = new Xoroshiro128Plus(bonusseed);
                         for (int h = 0; h < 4; h++)

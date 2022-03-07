@@ -24,7 +24,7 @@ namespace PLARNGGui
             weatherselection.DataSource = Enum.GetValues(typeof(Enums.Weather));
             Timeofdayselection.DataSource = Enum.GetValues(typeof(Enums.Time));
             outbreakmap.DataSource = Enum.GetValues(typeof(Enums.Maps));
-            MassiveMap.DataSource = Enum.GetValues(typeof(Enums.Maps));
+            MassiveMap.DataSource = Enum.GetValues(typeof(Enums.MMOMapCount));
       
 
         }

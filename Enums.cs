@@ -39,6 +39,16 @@ namespace PLARNGGui
             CoronetHighlands,
             AlabasterIcelands
         }
+        public enum MMOMapCount
+        {
+            
+            one,
+            two,
+            three,
+            four,
+            five,
+        }
+
     }
     
 }
