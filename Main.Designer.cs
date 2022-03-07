@@ -75,31 +75,29 @@ namespace PLARNGGui
             this.OutbreakDisplay = new System.Windows.Forms.RichTextBox();
             this.MMOtab = new System.Windows.Forms.TabPage();
             this.MassiveRead = new System.Windows.Forms.Button();
-            this.MassiveMap = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.MassiveDisplay = new System.Windows.Forms.RichTextBox();
+            this.Teleporter = new System.Windows.Forms.TabPage();
+            this.campteleportbutton = new System.Windows.Forms.Button();
+            this.campreadbutton = new System.Windows.Forms.Button();
+            this.campz = new System.Windows.Forms.TextBox();
+            this.campy = new System.Windows.Forms.TextBox();
+            this.Campx = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.teleportbutton = new System.Windows.Forms.Button();
+            this.Teleporterdisplay = new System.Windows.Forms.RichTextBox();
+            this.CoordZ = new System.Windows.Forms.TextBox();
+            this.CoordY = new System.Windows.Forms.TextBox();
+            this.CoordX = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.IP = new System.Windows.Forms.TextBox();
             this.connect = new System.Windows.Forms.Button();
             this.Disconnect = new System.Windows.Forms.Button();
-            this.Teleporter = new System.Windows.Forms.TabPage();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.CoordX = new System.Windows.Forms.TextBox();
-            this.CoordY = new System.Windows.Forms.TextBox();
-            this.CoordZ = new System.Windows.Forms.TextBox();
-            this.Teleporterdisplay = new System.Windows.Forms.RichTextBox();
-            this.teleportbutton = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.Campx = new System.Windows.Forms.TextBox();
-            this.campy = new System.Windows.Forms.TextBox();
-            this.campz = new System.Windows.Forms.TextBox();
-            this.campreadbutton = new System.Windows.Forms.Button();
-            this.campteleportbutton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.StandardSpawnstab.SuspendLayout();
             this.Outbreaktab.SuspendLayout();
@@ -540,8 +538,6 @@ namespace PLARNGGui
             // 
             this.MMOtab.BackColor = System.Drawing.Color.WhiteSmoke;
             this.MMOtab.Controls.Add(this.MassiveRead);
-            this.MMOtab.Controls.Add(this.MassiveMap);
-            this.MMOtab.Controls.Add(this.label17);
             this.MMOtab.Controls.Add(this.MassiveDisplay);
             this.MMOtab.Location = new System.Drawing.Point(4, 22);
             this.MMOtab.Name = "MMOtab";
@@ -560,23 +556,6 @@ namespace PLARNGGui
             this.MassiveRead.UseVisualStyleBackColor = true;
             this.MassiveRead.Click += new System.EventHandler(this.MassiveRead_Click);
             // 
-            // MassiveMap
-            // 
-            this.MassiveMap.FormattingEnabled = true;
-            this.MassiveMap.Location = new System.Drawing.Point(437, 6);
-            this.MassiveMap.Name = "MassiveMap";
-            this.MassiveMap.Size = new System.Drawing.Size(87, 21);
-            this.MassiveMap.TabIndex = 2;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(385, 9);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(46, 13);
-            this.label17.TabIndex = 1;
-            this.label17.Text = "MMO #:";
-            // 
             // MassiveDisplay
             // 
             this.MassiveDisplay.Location = new System.Drawing.Point(6, 6);
@@ -585,34 +564,6 @@ namespace PLARNGGui
             this.MassiveDisplay.Size = new System.Drawing.Size(373, 357);
             this.MassiveDisplay.TabIndex = 0;
             this.MassiveDisplay.Text = "";
-            // 
-            // IP
-            // 
-            this.IP.Location = new System.Drawing.Point(16, 12);
-            this.IP.Name = "IP";
-            this.IP.Size = new System.Drawing.Size(127, 20);
-            this.IP.TabIndex = 2;
-            this.IP.Text = "192.168.1.0";
-            // 
-            // connect
-            // 
-            this.connect.Location = new System.Drawing.Point(149, 9);
-            this.connect.Name = "connect";
-            this.connect.Size = new System.Drawing.Size(96, 23);
-            this.connect.TabIndex = 3;
-            this.connect.Text = "Connect";
-            this.connect.UseVisualStyleBackColor = true;
-            this.connect.Click += new System.EventHandler(this.connect_Click);
-            // 
-            // Disconnect
-            // 
-            this.Disconnect.Location = new System.Drawing.Point(251, 9);
-            this.Disconnect.Name = "Disconnect";
-            this.Disconnect.Size = new System.Drawing.Size(89, 23);
-            this.Disconnect.TabIndex = 5;
-            this.Disconnect.Text = "Disconnect";
-            this.Disconnect.UseVisualStyleBackColor = true;
-            this.Disconnect.Click += new System.EventHandler(this.Disconnect_Click);
             // 
             // Teleporter
             // 
@@ -642,138 +593,15 @@ namespace PLARNGGui
             this.Teleporter.TabIndex = 3;
             this.Teleporter.Text = "Teleporter";
             // 
-            // label18
+            // campteleportbutton
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(344, 27);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(17, 13);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "X:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(344, 51);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(17, 13);
-            this.label19.TabIndex = 1;
-            this.label19.Text = "Y:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(344, 74);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(17, 13);
-            this.label20.TabIndex = 2;
-            this.label20.Text = "Z:";
-            // 
-            // CoordX
-            // 
-            this.CoordX.Location = new System.Drawing.Point(367, 24);
-            this.CoordX.Name = "CoordX";
-            this.CoordX.Size = new System.Drawing.Size(117, 20);
-            this.CoordX.TabIndex = 3;
-            // 
-            // CoordY
-            // 
-            this.CoordY.Location = new System.Drawing.Point(367, 48);
-            this.CoordY.Name = "CoordY";
-            this.CoordY.Size = new System.Drawing.Size(117, 20);
-            this.CoordY.TabIndex = 4;
-            // 
-            // CoordZ
-            // 
-            this.CoordZ.Location = new System.Drawing.Point(367, 74);
-            this.CoordZ.Name = "CoordZ";
-            this.CoordZ.Size = new System.Drawing.Size(117, 20);
-            this.CoordZ.TabIndex = 5;
-            // 
-            // Teleporterdisplay
-            // 
-            this.Teleporterdisplay.Location = new System.Drawing.Point(6, 6);
-            this.Teleporterdisplay.Name = "Teleporterdisplay";
-            this.Teleporterdisplay.ReadOnly = true;
-            this.Teleporterdisplay.Size = new System.Drawing.Size(318, 357);
-            this.Teleporterdisplay.TabIndex = 6;
-            this.Teleporterdisplay.Text = "";
-            // 
-            // teleportbutton
-            // 
-            this.teleportbutton.Location = new System.Drawing.Point(367, 133);
-            this.teleportbutton.Name = "teleportbutton";
-            this.teleportbutton.Size = new System.Drawing.Size(75, 23);
-            this.teleportbutton.TabIndex = 7;
-            this.teleportbutton.Text = "Teleport";
-            this.teleportbutton.UseVisualStyleBackColor = true;
-            this.teleportbutton.Click += new System.EventHandler(this.teleportbutton_Click);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(364, 6);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(62, 13);
-            this.label21.TabIndex = 8;
-            this.label21.Text = "Teleport To";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(590, 6);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(93, 13);
-            this.label22.TabIndex = 9;
-            this.label22.Text = "Camp Coordinates";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(559, 27);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(17, 13);
-            this.label23.TabIndex = 10;
-            this.label23.Text = "X:";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(559, 51);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(17, 13);
-            this.label24.TabIndex = 11;
-            this.label24.Text = "Y:";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(559, 74);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(17, 13);
-            this.label25.TabIndex = 12;
-            this.label25.Text = "Z:";
-            // 
-            // Campx
-            // 
-            this.Campx.Location = new System.Drawing.Point(582, 24);
-            this.Campx.Name = "Campx";
-            this.Campx.Size = new System.Drawing.Size(134, 20);
-            this.Campx.TabIndex = 13;
-            // 
-            // campy
-            // 
-            this.campy.Location = new System.Drawing.Point(582, 48);
-            this.campy.Name = "campy";
-            this.campy.Size = new System.Drawing.Size(134, 20);
-            this.campy.TabIndex = 14;
-            // 
-            // campz
-            // 
-            this.campz.Location = new System.Drawing.Point(582, 74);
-            this.campz.Name = "campz";
-            this.campz.Size = new System.Drawing.Size(133, 20);
-            this.campz.TabIndex = 15;
+            this.campteleportbutton.Location = new System.Drawing.Point(608, 133);
+            this.campteleportbutton.Name = "campteleportbutton";
+            this.campteleportbutton.Size = new System.Drawing.Size(108, 23);
+            this.campteleportbutton.TabIndex = 17;
+            this.campteleportbutton.Text = "Camp Teleport";
+            this.campteleportbutton.UseVisualStyleBackColor = true;
+            this.campteleportbutton.Click += new System.EventHandler(this.campteleportbutton_Click);
             // 
             // campreadbutton
             // 
@@ -785,15 +613,166 @@ namespace PLARNGGui
             this.campreadbutton.UseVisualStyleBackColor = true;
             this.campreadbutton.Click += new System.EventHandler(this.campreadbutton_Click);
             // 
-            // campteleportbutton
+            // campz
             // 
-            this.campteleportbutton.Location = new System.Drawing.Point(608, 133);
-            this.campteleportbutton.Name = "campteleportbutton";
-            this.campteleportbutton.Size = new System.Drawing.Size(108, 23);
-            this.campteleportbutton.TabIndex = 17;
-            this.campteleportbutton.Text = "Camp Teleport";
-            this.campteleportbutton.UseVisualStyleBackColor = true;
-            this.campteleportbutton.Click += new System.EventHandler(this.campteleportbutton_Click);
+            this.campz.Location = new System.Drawing.Point(582, 74);
+            this.campz.Name = "campz";
+            this.campz.Size = new System.Drawing.Size(133, 20);
+            this.campz.TabIndex = 15;
+            // 
+            // campy
+            // 
+            this.campy.Location = new System.Drawing.Point(582, 48);
+            this.campy.Name = "campy";
+            this.campy.Size = new System.Drawing.Size(134, 20);
+            this.campy.TabIndex = 14;
+            // 
+            // Campx
+            // 
+            this.Campx.Location = new System.Drawing.Point(582, 24);
+            this.Campx.Name = "Campx";
+            this.Campx.Size = new System.Drawing.Size(134, 20);
+            this.Campx.TabIndex = 13;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(559, 74);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(17, 13);
+            this.label25.TabIndex = 12;
+            this.label25.Text = "Z:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(559, 51);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(17, 13);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "Y:";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(559, 27);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(17, 13);
+            this.label23.TabIndex = 10;
+            this.label23.Text = "X:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(590, 6);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(93, 13);
+            this.label22.TabIndex = 9;
+            this.label22.Text = "Camp Coordinates";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(364, 6);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(62, 13);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "Teleport To";
+            // 
+            // teleportbutton
+            // 
+            this.teleportbutton.Location = new System.Drawing.Point(367, 133);
+            this.teleportbutton.Name = "teleportbutton";
+            this.teleportbutton.Size = new System.Drawing.Size(75, 23);
+            this.teleportbutton.TabIndex = 7;
+            this.teleportbutton.Text = "Teleport";
+            this.teleportbutton.UseVisualStyleBackColor = true;
+            this.teleportbutton.Click += new System.EventHandler(this.teleportbutton_Click);
+            // 
+            // Teleporterdisplay
+            // 
+            this.Teleporterdisplay.Location = new System.Drawing.Point(6, 6);
+            this.Teleporterdisplay.Name = "Teleporterdisplay";
+            this.Teleporterdisplay.ReadOnly = true;
+            this.Teleporterdisplay.Size = new System.Drawing.Size(318, 357);
+            this.Teleporterdisplay.TabIndex = 6;
+            this.Teleporterdisplay.Text = "";
+            // 
+            // CoordZ
+            // 
+            this.CoordZ.Location = new System.Drawing.Point(367, 74);
+            this.CoordZ.Name = "CoordZ";
+            this.CoordZ.Size = new System.Drawing.Size(117, 20);
+            this.CoordZ.TabIndex = 5;
+            // 
+            // CoordY
+            // 
+            this.CoordY.Location = new System.Drawing.Point(367, 48);
+            this.CoordY.Name = "CoordY";
+            this.CoordY.Size = new System.Drawing.Size(117, 20);
+            this.CoordY.TabIndex = 4;
+            // 
+            // CoordX
+            // 
+            this.CoordX.Location = new System.Drawing.Point(367, 24);
+            this.CoordX.Name = "CoordX";
+            this.CoordX.Size = new System.Drawing.Size(117, 20);
+            this.CoordX.TabIndex = 3;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(344, 74);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(17, 13);
+            this.label20.TabIndex = 2;
+            this.label20.Text = "Z:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(344, 51);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(17, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Y:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(344, 27);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(17, 13);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "X:";
+            // 
+            // IP
+            // 
+            this.IP.Location = new System.Drawing.Point(16, 12);
+            this.IP.Name = "IP";
+            this.IP.Size = new System.Drawing.Size(127, 20);
+            this.IP.TabIndex = 2;
+            this.IP.Text = "192.168.1.0";
+            // 
+            // connect
+            // 
+            this.connect.Location = new System.Drawing.Point(149, 9);
+            this.connect.Name = "connect";
+            this.connect.Size = new System.Drawing.Size(96, 23);
+            this.connect.TabIndex = 3;
+            this.connect.Text = "Connect";
+            this.connect.UseVisualStyleBackColor = true;
+            this.connect.Click += new System.EventHandler(this.connect_Click);
+            // 
+            // Disconnect
+            // 
+            this.Disconnect.Location = new System.Drawing.Point(251, 9);
+            this.Disconnect.Name = "Disconnect";
+            this.Disconnect.Size = new System.Drawing.Size(89, 23);
+            this.Disconnect.TabIndex = 5;
+            this.Disconnect.Text = "Disconnect";
+            this.Disconnect.UseVisualStyleBackColor = true;
+            this.Disconnect.Click += new System.EventHandler(this.Disconnect_Click);
             // 
             // Main
             // 
@@ -814,7 +793,6 @@ namespace PLARNGGui
             this.Outbreaktab.ResumeLayout(false);
             this.Outbreaktab.PerformLayout();
             this.MMOtab.ResumeLayout(false);
-            this.MMOtab.PerformLayout();
             this.Teleporter.ResumeLayout(false);
             this.Teleporter.PerformLayout();
             this.ResumeLayout(false);
@@ -871,8 +849,6 @@ namespace PLARNGGui
         private System.Windows.Forms.Label label16;
         public System.Windows.Forms.TextBox outbreakspawncount;
         private System.Windows.Forms.TabPage MMOtab;
-        private System.Windows.Forms.Label label17;
-        public System.Windows.Forms.ComboBox MassiveMap;
         public System.Windows.Forms.RichTextBox MassiveDisplay;
         private System.Windows.Forms.Button MassiveRead;
         private System.Windows.Forms.TabPage Teleporter;

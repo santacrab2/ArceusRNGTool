@@ -24,7 +24,7 @@ namespace PLARNGGui
             weatherselection.DataSource = Enum.GetValues(typeof(Enums.Weather));
             Timeofdayselection.DataSource = Enum.GetValues(typeof(Enums.Time));
             outbreakmap.DataSource = Enum.GetValues(typeof(Enums.Maps));
-            MassiveMap.DataSource = Enum.GetValues(typeof(Enums.MMOMapCount));
+           
       
 
         }
@@ -209,15 +209,15 @@ namespace PLARNGGui
         {
             var playerlocationptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
             var playerlocationoff = routes.PointerAll(playerlocationptr).Result;
-            var doubleCoordX = Convert.ToDouble(Program.main.CoordX.Text);
-            var CoordX = BitConverter.DoubleToInt64Bits(doubleCoordX);
-            byte[] X = BitConverter.GetBytes(CoordX);
-            var doubleCoordY = Convert.ToDouble(Program.main.CoordY.Text);
-            var CoordY = BitConverter.DoubleToInt64Bits(doubleCoordY);
-            byte[] Y = BitConverter.GetBytes(CoordY);
-            var doubleCoordZ = Convert.ToDouble(Program.main.CoordZ.Text);
-            var CoordZ = BitConverter.DoubleToInt64Bits(doubleCoordZ);
-            byte[] Z = BitConverter.GetBytes(CoordZ);
+            var doubleCoordX = float.Parse(Program.main.CoordX.Text);
+            
+            byte[] X = BitConverter.GetBytes(doubleCoordX);
+            var doubleCoordY = float.Parse(Program.main.CoordY.Text);
+           
+            byte[] Y = BitConverter.GetBytes(doubleCoordY);
+            var doubleCoordZ = float.Parse(Program.main.CoordZ.Text);
+            
+            byte[] Z = BitConverter.GetBytes(doubleCoordZ);
 
             await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
             await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
@@ -228,9 +228,9 @@ namespace PLARNGGui
         {
             var playerlocptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
             var playerlocoff = routes.PointerAll(playerlocptr).Result;
-            var coordx = BitConverter.ToUInt32(await routes.ReadBytesAbsoluteAsync(playerlocoff, 4), 0);
-            var coordy = BitConverter.ToUInt32(await routes.ReadBytesAbsoluteAsync(playerlocoff + 0x4, 4), 0);
-            var coordz = BitConverter.ToUInt32(await routes.ReadBytesAbsoluteAsync(playerlocoff + 0x8, 4), 0);
+            var coordx = BitConverter.ToSingle(await routes.ReadBytesAbsoluteAsync(playerlocoff, 4), 0);
+            var coordy = BitConverter.ToSingle(await routes.ReadBytesAbsoluteAsync(playerlocoff + 0x4, 4), 0);
+            var coordz = BitConverter.ToSingle(await routes.ReadBytesAbsoluteAsync(playerlocoff + 0x8, 4), 0);
             Program.main.Campx.Text = $"{coordx}";
             Program.main.campy.Text = $"{coordy}";
             Program.main.campz.Text = $"{coordz}";
@@ -240,11 +240,11 @@ namespace PLARNGGui
         {
             var playerlocationptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
             var playerlocationoff = routes.PointerAll(playerlocationptr).Result;
-            var CoordX = uint.Parse(Program.main.Campx.Text);
+            var CoordX = float.Parse(Program.main.Campx.Text);
             byte[] X = BitConverter.GetBytes(CoordX);
-            var CoordY = uint.Parse(Program.main.campy.Text);
+            var CoordY = float.Parse(Program.main.campy.Text);
             byte[] Y = BitConverter.GetBytes(CoordY);
-            var CoordZ = uint.Parse(Program.main.campz.Text);
+            var CoordZ = float.Parse(Program.main.campz.Text);
             byte[] Z = BitConverter.GetBytes(CoordZ);
 
             await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
