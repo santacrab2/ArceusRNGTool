@@ -199,13 +199,26 @@ namespace PLARNGGui
 
         }
 
-        private async void MMOInject_Click(object sender, EventArgs e)
+
+        private void Main_Load(object sender, EventArgs e)
         {
-            var groupid = Convert.ToInt32(Program.main.MMOgroupid.Text);
-            var spawnerpointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (groupid * 0x90) + (0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem) + 0x44 };
-            var spawneroff = Main.routes.PointerAll(spawnerpointer).Result;
-            await routes.WriteBytesAbsoluteAsync(BitConverter.GetBytes(Convert.ToUInt64(Program.main.MMOSeedtoinject.Text, 16)), spawneroff);
-            Program.main.MassiveDisplay.AppendText("Injecting: " + string.Format("{0:X}", Program.main.MMOSeedtoinject.Text) + "\n");
+
+        }
+
+        private async void teleportbutton_Click(object sender, EventArgs e)
+        {
+            var playerlocationptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
+            var playerlocationoff = routes.PointerAll(playerlocationptr).Result;
+            var CoordX = uint.Parse(Program.main.CoordX.Text);
+            byte[] X = BitConverter.GetBytes(CoordX);
+            var CoordY = uint.Parse(Program.main.CoordY.Text);
+            byte[] Y = BitConverter.GetBytes(CoordY);
+            var CoordZ = uint.Parse(Program.main.CoordZ.Text);
+            byte[] Z = BitConverter.GetBytes(CoordZ);
+
+            await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
+            await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
+            await routes.WriteBytesAbsoluteAsync(Z, playerlocationoff + 0x8);
         }
     }
 }

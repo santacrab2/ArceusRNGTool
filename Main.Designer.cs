@@ -74,11 +74,6 @@ namespace PLARNGGui
             this.label10 = new System.Windows.Forms.Label();
             this.OutbreakDisplay = new System.Windows.Forms.RichTextBox();
             this.MMOtab = new System.Windows.Forms.TabPage();
-            this.MMOinject = new System.Windows.Forms.Button();
-            this.MMOSeedtoinject = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.MMOgroupid = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.MassiveRead = new System.Windows.Forms.Button();
             this.MassiveMap = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -86,10 +81,20 @@ namespace PLARNGGui
             this.IP = new System.Windows.Forms.TextBox();
             this.connect = new System.Windows.Forms.Button();
             this.Disconnect = new System.Windows.Forms.Button();
+            this.Teleporter = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.CoordX = new System.Windows.Forms.TextBox();
+            this.CoordY = new System.Windows.Forms.TextBox();
+            this.CoordZ = new System.Windows.Forms.TextBox();
+            this.Teleporterdisplay = new System.Windows.Forms.RichTextBox();
+            this.teleportbutton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.StandardSpawnstab.SuspendLayout();
             this.Outbreaktab.SuspendLayout();
             this.MMOtab.SuspendLayout();
+            this.Teleporter.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -97,6 +102,7 @@ namespace PLARNGGui
             this.tabControl1.Controls.Add(this.StandardSpawnstab);
             this.tabControl1.Controls.Add(this.Outbreaktab);
             this.tabControl1.Controls.Add(this.MMOtab);
+            this.tabControl1.Controls.Add(this.Teleporter);
             this.tabControl1.Location = new System.Drawing.Point(12, 43);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -523,11 +529,6 @@ namespace PLARNGGui
             // MMOtab
             // 
             this.MMOtab.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.MMOtab.Controls.Add(this.MMOinject);
-            this.MMOtab.Controls.Add(this.MMOSeedtoinject);
-            this.MMOtab.Controls.Add(this.label19);
-            this.MMOtab.Controls.Add(this.MMOgroupid);
-            this.MMOtab.Controls.Add(this.label18);
             this.MMOtab.Controls.Add(this.MassiveRead);
             this.MMOtab.Controls.Add(this.MassiveMap);
             this.MMOtab.Controls.Add(this.label17);
@@ -538,49 +539,6 @@ namespace PLARNGGui
             this.MMOtab.Size = new System.Drawing.Size(768, 369);
             this.MMOtab.TabIndex = 2;
             this.MMOtab.Text = "Massive Outbreaks";
-            // 
-            // MMOinject
-            // 
-            this.MMOinject.Location = new System.Drawing.Point(531, 261);
-            this.MMOinject.Name = "MMOinject";
-            this.MMOinject.Size = new System.Drawing.Size(99, 23);
-            this.MMOinject.TabIndex = 8;
-            this.MMOinject.Text = "Inject";
-            this.MMOinject.UseVisualStyleBackColor = true;
-            this.MMOinject.Click += new System.EventHandler(this.MMOInject_Click);
-            // 
-            // MMOSeedtoinject
-            // 
-            this.MMOSeedtoinject.Location = new System.Drawing.Point(468, 64);
-            this.MMOSeedtoinject.Name = "MMOSeedtoinject";
-            this.MMOSeedtoinject.Size = new System.Drawing.Size(138, 20);
-            this.MMOSeedtoinject.TabIndex = 7;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(385, 67);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(77, 13);
-            this.label19.TabIndex = 6;
-            this.label19.Text = "Seed To Inject";
-            // 
-            // MMOgroupid
-            // 
-            this.MMOgroupid.Location = new System.Drawing.Point(440, 33);
-            this.MMOgroupid.Name = "MMOgroupid";
-            this.MMOgroupid.Size = new System.Drawing.Size(49, 20);
-            this.MMOgroupid.TabIndex = 5;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(384, 36);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(50, 13);
-            this.label18.TabIndex = 4;
-            this.label18.Text = "Group ID";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // MassiveRead
             // 
@@ -595,9 +553,9 @@ namespace PLARNGGui
             // MassiveMap
             // 
             this.MassiveMap.FormattingEnabled = true;
-            this.MassiveMap.Location = new System.Drawing.Point(419, 6);
+            this.MassiveMap.Location = new System.Drawing.Point(437, 6);
             this.MassiveMap.Name = "MassiveMap";
-            this.MassiveMap.Size = new System.Drawing.Size(121, 21);
+            this.MassiveMap.Size = new System.Drawing.Size(87, 21);
             this.MassiveMap.TabIndex = 2;
             // 
             // label17
@@ -605,9 +563,9 @@ namespace PLARNGGui
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(385, 9);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(28, 13);
+            this.label17.Size = new System.Drawing.Size(46, 13);
             this.label17.TabIndex = 1;
-            this.label17.Text = "Map";
+            this.label17.Text = "MMO #:";
             // 
             // MassiveDisplay
             // 
@@ -646,6 +604,91 @@ namespace PLARNGGui
             this.Disconnect.UseVisualStyleBackColor = true;
             this.Disconnect.Click += new System.EventHandler(this.Disconnect_Click);
             // 
+            // Teleporter
+            // 
+            this.Teleporter.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Teleporter.Controls.Add(this.teleportbutton);
+            this.Teleporter.Controls.Add(this.Teleporterdisplay);
+            this.Teleporter.Controls.Add(this.CoordZ);
+            this.Teleporter.Controls.Add(this.CoordY);
+            this.Teleporter.Controls.Add(this.CoordX);
+            this.Teleporter.Controls.Add(this.label20);
+            this.Teleporter.Controls.Add(this.label19);
+            this.Teleporter.Controls.Add(this.label18);
+            this.Teleporter.Location = new System.Drawing.Point(4, 22);
+            this.Teleporter.Name = "Teleporter";
+            this.Teleporter.Padding = new System.Windows.Forms.Padding(3);
+            this.Teleporter.Size = new System.Drawing.Size(768, 369);
+            this.Teleporter.TabIndex = 3;
+            this.Teleporter.Text = "Teleporter";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(344, 27);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(17, 13);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "X:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(344, 51);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(17, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Y:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(344, 74);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(17, 13);
+            this.label20.TabIndex = 2;
+            this.label20.Text = "Z:";
+            // 
+            // CoordX
+            // 
+            this.CoordX.Location = new System.Drawing.Point(367, 24);
+            this.CoordX.Name = "CoordX";
+            this.CoordX.Size = new System.Drawing.Size(59, 20);
+            this.CoordX.TabIndex = 3;
+            // 
+            // CoordY
+            // 
+            this.CoordY.Location = new System.Drawing.Point(367, 48);
+            this.CoordY.Name = "CoordY";
+            this.CoordY.Size = new System.Drawing.Size(59, 20);
+            this.CoordY.TabIndex = 4;
+            // 
+            // CoordZ
+            // 
+            this.CoordZ.Location = new System.Drawing.Point(367, 74);
+            this.CoordZ.Name = "CoordZ";
+            this.CoordZ.Size = new System.Drawing.Size(59, 20);
+            this.CoordZ.TabIndex = 5;
+            // 
+            // Teleporterdisplay
+            // 
+            this.Teleporterdisplay.Location = new System.Drawing.Point(6, 6);
+            this.Teleporterdisplay.Name = "Teleporterdisplay";
+            this.Teleporterdisplay.ReadOnly = true;
+            this.Teleporterdisplay.Size = new System.Drawing.Size(318, 357);
+            this.Teleporterdisplay.TabIndex = 6;
+            this.Teleporterdisplay.Text = "";
+            // 
+            // teleportbutton
+            // 
+            this.teleportbutton.Location = new System.Drawing.Point(367, 133);
+            this.teleportbutton.Name = "teleportbutton";
+            this.teleportbutton.Size = new System.Drawing.Size(75, 23);
+            this.teleportbutton.TabIndex = 7;
+            this.teleportbutton.Text = "Teleport";
+            this.teleportbutton.UseVisualStyleBackColor = true;
+            this.teleportbutton.Click += new System.EventHandler(this.teleportbutton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -658,6 +701,7 @@ namespace PLARNGGui
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
             this.Text = "ArceusRNGTools";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.tabControl1.ResumeLayout(false);
             this.StandardSpawnstab.ResumeLayout(false);
             this.StandardSpawnstab.PerformLayout();
@@ -665,6 +709,8 @@ namespace PLARNGGui
             this.Outbreaktab.PerformLayout();
             this.MMOtab.ResumeLayout(false);
             this.MMOtab.PerformLayout();
+            this.Teleporter.ResumeLayout(false);
+            this.Teleporter.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -723,11 +769,15 @@ namespace PLARNGGui
         public System.Windows.Forms.ComboBox MassiveMap;
         public System.Windows.Forms.RichTextBox MassiveDisplay;
         private System.Windows.Forms.Button MassiveRead;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Button MMOinject;
+        private System.Windows.Forms.TabPage Teleporter;
+        private System.Windows.Forms.Button teleportbutton;
+        public System.Windows.Forms.RichTextBox Teleporterdisplay;
+        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
-        public System.Windows.Forms.TextBox MMOSeedtoinject;
-        public System.Windows.Forms.TextBox MMOgroupid;
+        private System.Windows.Forms.Label label18;
+        public System.Windows.Forms.TextBox CoordX;
+        public System.Windows.Forms.TextBox CoordY;
+        public System.Windows.Forms.TextBox CoordZ;
     }
 }
 

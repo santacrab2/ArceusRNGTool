@@ -194,6 +194,8 @@ namespace PLARNGGui
                 return;
             }
             Program.main.outbreakgroupid.Text = $"{group_id}";
+            var coords = spawnmap[$"{group_id}"]["coords"];
+            Program.main.OutbreakDisplay.AppendText($"Group: {group_id}\nX: {coords[0]}\nY: {coords[1]}\nZ: {coords[2]}\n");
             SpawnerOffpoint = new long[] { 0x42a6ee0, 0x330, 0x70 + group_id * 0x440 + 0x20 };
             SpawnerOff = Main.routes.PointerAll(SpawnerOffpoint).Result;
             var GeneratorSeed = Main.routes.ReadBytesAbsoluteAsync(SpawnerOff, 8).Result;
@@ -355,9 +357,22 @@ namespace PLARNGGui
         {
             for(int i = 0; i < 15; i++)
             {
-                var speciespointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (i * 0x90) + (0xB80 * ((int)(Enums.Maps)Program.main.MassiveMap.SelectedItem)) };
-                var speciesoff = Main.routes.PointerAll(speciespointer).Result;
-                int species = BitConverter.ToUInt16(Main.routes.ReadBytesAbsoluteAsync(speciesoff, 2).Result,0);
+                var outbreakpointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (i * 0x90) + (0xB80 * ((int)(Enums.Maps)Program.main.MassiveMap.SelectedItem)) };
+                var Outbreakoff = Main.routes.PointerAll(outbreakpointer).Result;
+                var location = Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x24, 2).Result;
+                var map = BitConverter.ToString(location);
+                switch (map)
+                {
+                    case "B7-56": map = " in the Cobalt Coastlands"; break;
+                    case "04-55": map = " in the Crimson Mirelands"; break;
+                    case "51-53": map = " in the Alabaster Icelands"; break;
+                    case "9E-51": map = " in the Coronet Highlands"; break;
+                    case "1D-5A": map = " in the Obsidian Fieldlands"; break;
+                    case "00-00": map = ""; break;
+                }
+                if(i == 0)
+                    Program.main.MassiveDisplay.AppendText($"Searching {map}\n");
+                int species = BitConverter.ToUInt16(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff, 2).Result,0);
                 Task.Delay(1000);
                 Program.main.MassiveDisplay.AppendText($"GroupID: {i} {(Species)species}\n");
                 if(species != 0)
@@ -370,19 +385,18 @@ namespace PLARNGGui
                     ulong gender = new ulong();
                     ulong nature = new ulong();
                     ulong shinyseed = new ulong();
-                    var spawnerpointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (i * 0x90) + (0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem) + 0x44 };
-                    var spawneroff = Main.routes.PointerAll(spawnerpointer).Result;
-                    var groupseed = BitConverter.ToUInt64( Main.routes.ReadBytesAbsoluteAsync(spawneroff, 8).Result,0);
-                    var maxspawnspointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (i * 0x90) + (0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem) + 0x4c };
-                    var maxspawnoff = Main.routes.PointerAll(maxspawnspointer).Result;
-                    var maxspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(maxspawnoff, 4).Result,0);
+                    var spawncoordx = BitConverter.ToUInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x14, 4).Result, 0);
+                    var spawncoordy = BitConverter.ToUInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x10, 4).Result, 0);
+                    var spawncoordz = BitConverter.ToUInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff - 0x0C, 4).Result, 0);
+                    Program.main.MassiveDisplay.AppendText($"Coordinates: X: {spawncoordx} Y: {spawncoordy} Z: {spawncoordz}\n");
+                    var groupseed = BitConverter.ToUInt64( Main.routes.ReadBytesAbsoluteAsync(Outbreakoff+0x44, 8).Result,0);
+                    var maxspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff+0x4c, 4).Result,0);
                     Program.main.MassiveDisplay.AppendText($"Max spawns: {maxspawns}\n");
-                    var currspawnspointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (i * 0x90) + (0xb80 * (int)(Enums.Maps)Program.main.MassiveMap.SelectedItem) + 0x50 };
-                    var currspawnoff = Main.routes.PointerAll(currspawnspointer).Result;
-                    var currspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(currspawnoff,4).Result,0);
+                    var currspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff+0x50,4).Result,0);
                     Program.main.MassiveDisplay.AppendText($"Current spawns: {currspawns}\n\n");
-                    var bonusround = BitConverter.ToUInt16(Main.routes.ReadBytesAbsoluteAsync(speciesoff + 0x18, 2).Result, 0);
-                    var bonuscount = BitConverter.ToInt16(Main.routes.ReadBytesAbsoluteAsync(speciesoff+0x60,2).Result, 0);
+                    var bonusround = BitConverter.ToUInt16(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x18, 2).Result, 0);
+                    var bonuscount = BitConverter.ToInt16(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff+0x60,2).Result, 0);
+                   
                     var mainrng = new Xoroshiro128Plus(groupseed);
                     for (int h = 0; h < 4; h++)
                     {
