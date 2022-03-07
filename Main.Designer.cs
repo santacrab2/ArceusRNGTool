@@ -90,6 +90,16 @@ namespace PLARNGGui
             this.CoordZ = new System.Windows.Forms.TextBox();
             this.Teleporterdisplay = new System.Windows.Forms.RichTextBox();
             this.teleportbutton = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.Campx = new System.Windows.Forms.TextBox();
+            this.campy = new System.Windows.Forms.TextBox();
+            this.campz = new System.Windows.Forms.TextBox();
+            this.campreadbutton = new System.Windows.Forms.Button();
+            this.campteleportbutton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.StandardSpawnstab.SuspendLayout();
             this.Outbreaktab.SuspendLayout();
@@ -607,6 +617,16 @@ namespace PLARNGGui
             // Teleporter
             // 
             this.Teleporter.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Teleporter.Controls.Add(this.campteleportbutton);
+            this.Teleporter.Controls.Add(this.campreadbutton);
+            this.Teleporter.Controls.Add(this.campz);
+            this.Teleporter.Controls.Add(this.campy);
+            this.Teleporter.Controls.Add(this.Campx);
+            this.Teleporter.Controls.Add(this.label25);
+            this.Teleporter.Controls.Add(this.label24);
+            this.Teleporter.Controls.Add(this.label23);
+            this.Teleporter.Controls.Add(this.label22);
+            this.Teleporter.Controls.Add(this.label21);
             this.Teleporter.Controls.Add(this.teleportbutton);
             this.Teleporter.Controls.Add(this.Teleporterdisplay);
             this.Teleporter.Controls.Add(this.CoordZ);
@@ -653,21 +673,21 @@ namespace PLARNGGui
             // 
             this.CoordX.Location = new System.Drawing.Point(367, 24);
             this.CoordX.Name = "CoordX";
-            this.CoordX.Size = new System.Drawing.Size(59, 20);
+            this.CoordX.Size = new System.Drawing.Size(117, 20);
             this.CoordX.TabIndex = 3;
             // 
             // CoordY
             // 
             this.CoordY.Location = new System.Drawing.Point(367, 48);
             this.CoordY.Name = "CoordY";
-            this.CoordY.Size = new System.Drawing.Size(59, 20);
+            this.CoordY.Size = new System.Drawing.Size(117, 20);
             this.CoordY.TabIndex = 4;
             // 
             // CoordZ
             // 
             this.CoordZ.Location = new System.Drawing.Point(367, 74);
             this.CoordZ.Name = "CoordZ";
-            this.CoordZ.Size = new System.Drawing.Size(59, 20);
+            this.CoordZ.Size = new System.Drawing.Size(117, 20);
             this.CoordZ.TabIndex = 5;
             // 
             // Teleporterdisplay
@@ -688,6 +708,92 @@ namespace PLARNGGui
             this.teleportbutton.Text = "Teleport";
             this.teleportbutton.UseVisualStyleBackColor = true;
             this.teleportbutton.Click += new System.EventHandler(this.teleportbutton_Click);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(364, 6);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(62, 13);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "Teleport To";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(590, 6);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(93, 13);
+            this.label22.TabIndex = 9;
+            this.label22.Text = "Camp Coordinates";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(559, 27);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(17, 13);
+            this.label23.TabIndex = 10;
+            this.label23.Text = "X:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(559, 51);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(17, 13);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "Y:";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(559, 74);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(17, 13);
+            this.label25.TabIndex = 12;
+            this.label25.Text = "Z:";
+            // 
+            // Campx
+            // 
+            this.Campx.Location = new System.Drawing.Point(582, 24);
+            this.Campx.Name = "Campx";
+            this.Campx.Size = new System.Drawing.Size(134, 20);
+            this.Campx.TabIndex = 13;
+            // 
+            // campy
+            // 
+            this.campy.Location = new System.Drawing.Point(582, 48);
+            this.campy.Name = "campy";
+            this.campy.Size = new System.Drawing.Size(134, 20);
+            this.campy.TabIndex = 14;
+            // 
+            // campz
+            // 
+            this.campz.Location = new System.Drawing.Point(582, 74);
+            this.campz.Name = "campz";
+            this.campz.Size = new System.Drawing.Size(133, 20);
+            this.campz.TabIndex = 15;
+            // 
+            // campreadbutton
+            // 
+            this.campreadbutton.Location = new System.Drawing.Point(519, 133);
+            this.campreadbutton.Name = "campreadbutton";
+            this.campreadbutton.Size = new System.Drawing.Size(75, 23);
+            this.campreadbutton.TabIndex = 16;
+            this.campreadbutton.Text = "Camp Read";
+            this.campreadbutton.UseVisualStyleBackColor = true;
+            this.campreadbutton.Click += new System.EventHandler(this.campreadbutton_Click);
+            // 
+            // campteleportbutton
+            // 
+            this.campteleportbutton.Location = new System.Drawing.Point(608, 133);
+            this.campteleportbutton.Name = "campteleportbutton";
+            this.campteleportbutton.Size = new System.Drawing.Size(108, 23);
+            this.campteleportbutton.TabIndex = 17;
+            this.campteleportbutton.Text = "Camp Teleport";
+            this.campteleportbutton.UseVisualStyleBackColor = true;
+            this.campteleportbutton.Click += new System.EventHandler(this.campteleportbutton_Click);
             // 
             // Main
             // 
@@ -778,6 +884,16 @@ namespace PLARNGGui
         public System.Windows.Forms.TextBox CoordX;
         public System.Windows.Forms.TextBox CoordY;
         public System.Windows.Forms.TextBox CoordZ;
+        private System.Windows.Forms.Button campteleportbutton;
+        private System.Windows.Forms.Button campreadbutton;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        public System.Windows.Forms.TextBox Campx;
+        public System.Windows.Forms.TextBox campy;
+        public System.Windows.Forms.TextBox campz;
     }
 }
 

@@ -220,5 +220,33 @@ namespace PLARNGGui
             await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
             await routes.WriteBytesAbsoluteAsync(Z, playerlocationoff + 0x8);
         }
+
+        private async void campreadbutton_Click(object sender, EventArgs e)
+        {
+            var playerlocptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
+            var playerlocoff = routes.PointerAll(playerlocptr).Result;
+            var coordx = BitConverter.ToUInt32(await routes.ReadBytesAbsoluteAsync(playerlocoff, 4), 0);
+            var coordy = BitConverter.ToUInt32(await routes.ReadBytesAbsoluteAsync(playerlocoff + 0x4, 4), 0);
+            var coordz = BitConverter.ToUInt32(await routes.ReadBytesAbsoluteAsync(playerlocoff + 0x8, 4), 0);
+            Program.main.Campx.Text = $"{coordx}";
+            Program.main.campy.Text = $"{coordy}";
+            Program.main.campz.Text = $"{coordz}";
+        }
+
+        private async void campteleportbutton_Click(object sender, EventArgs e)
+        {
+            var playerlocationptr = new long[] { 0x42D4720, 0x18, 0x48, 0x1F0, 0x18, 0x370, 0x90 };
+            var playerlocationoff = routes.PointerAll(playerlocationptr).Result;
+            var CoordX = uint.Parse(Program.main.Campx.Text);
+            byte[] X = BitConverter.GetBytes(CoordX);
+            var CoordY = uint.Parse(Program.main.campy.Text);
+            byte[] Y = BitConverter.GetBytes(CoordY);
+            var CoordZ = uint.Parse(Program.main.campz.Text);
+            byte[] Z = BitConverter.GetBytes(CoordZ);
+
+            await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
+            await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
+            await routes.WriteBytesAbsoluteAsync(Z, playerlocationoff + 0x8);
+        }
     }
 }
