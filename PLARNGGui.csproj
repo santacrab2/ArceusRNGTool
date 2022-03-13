@@ -94,7 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BotBaseRoutines.cs" />
-    <Compile Include="RngRoutines.cs" />
+    <Compile Include="RNGRoutines\DistortionRoutines.cs" />
+    <Compile Include="RNGRoutines\MMORoutines.cs" />
+    <Compile Include="RNGRoutines\OutbreakRoutines.cs" />
+    <Compile Include="RNGRoutines\RngRoutines.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

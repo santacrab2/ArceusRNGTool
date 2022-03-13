@@ -32,6 +32,8 @@ namespace PLARNGGui
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.StandardSpawnstab = new System.Windows.Forms.TabPage();
+            this.checknear = new System.Windows.Forms.Button();
+            this.standardgroupid = new System.Windows.Forms.ComboBox();
             this.calculatebutton = new System.Windows.Forms.Button();
             this.InjectStandard = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -52,8 +54,8 @@ namespace PLARNGGui
             this.label2 = new System.Windows.Forms.Label();
             this.SeedToInject = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupid = new System.Windows.Forms.TextBox();
             this.Outbreaktab = new System.Windows.Forms.TabPage();
+            this.AlphaSearch = new System.Windows.Forms.CheckBox();
             this.outbreakspawncount = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.outbreakmap = new System.Windows.Forms.ComboBox();
@@ -69,13 +71,21 @@ namespace PLARNGGui
             this.label11 = new System.Windows.Forms.Label();
             this.outbreakread = new System.Windows.Forms.Button();
             this.outbreakcalculate = new System.Windows.Forms.Button();
-            this.AlphaSearch = new System.Windows.Forms.RadioButton();
             this.outbreakgroupid = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.OutbreakDisplay = new System.Windows.Forms.RichTextBox();
             this.MMOtab = new System.Windows.Forms.TabPage();
+            this.Aggromap = new System.Windows.Forms.ComboBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.MMOSRs = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.Aggro = new System.Windows.Forms.CheckBox();
             this.MassiveRead = new System.Windows.Forms.Button();
             this.MassiveDisplay = new System.Windows.Forms.RichTextBox();
+            this.distortiontab = new System.Windows.Forms.TabPage();
+            this.distortionmap = new System.Windows.Forms.ComboBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.Distortiondisplay = new System.Windows.Forms.RichTextBox();
             this.Teleporter = new System.Windows.Forms.TabPage();
             this.campteleportbutton = new System.Windows.Forms.Button();
             this.campreadbutton = new System.Windows.Forms.Button();
@@ -98,10 +108,16 @@ namespace PLARNGGui
             this.IP = new System.Windows.Forms.TextBox();
             this.connect = new System.Windows.Forms.Button();
             this.Disconnect = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.DistortionSRs = new System.Windows.Forms.TextBox();
+            this.readalldisbutton = new System.Windows.Forms.Button();
+            this.createdis = new System.Windows.Forms.Button();
+            this.pastureteleport = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.StandardSpawnstab.SuspendLayout();
             this.Outbreaktab.SuspendLayout();
             this.MMOtab.SuspendLayout();
+            this.distortiontab.SuspendLayout();
             this.Teleporter.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,6 +126,7 @@ namespace PLARNGGui
             this.tabControl1.Controls.Add(this.StandardSpawnstab);
             this.tabControl1.Controls.Add(this.Outbreaktab);
             this.tabControl1.Controls.Add(this.MMOtab);
+            this.tabControl1.Controls.Add(this.distortiontab);
             this.tabControl1.Controls.Add(this.Teleporter);
             this.tabControl1.Location = new System.Drawing.Point(12, 43);
             this.tabControl1.Name = "tabControl1";
@@ -120,6 +137,8 @@ namespace PLARNGGui
             // StandardSpawnstab
             // 
             this.StandardSpawnstab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.StandardSpawnstab.Controls.Add(this.checknear);
+            this.StandardSpawnstab.Controls.Add(this.standardgroupid);
             this.StandardSpawnstab.Controls.Add(this.calculatebutton);
             this.StandardSpawnstab.Controls.Add(this.InjectStandard);
             this.StandardSpawnstab.Controls.Add(this.label9);
@@ -140,13 +159,31 @@ namespace PLARNGGui
             this.StandardSpawnstab.Controls.Add(this.label2);
             this.StandardSpawnstab.Controls.Add(this.SeedToInject);
             this.StandardSpawnstab.Controls.Add(this.label1);
-            this.StandardSpawnstab.Controls.Add(this.groupid);
             this.StandardSpawnstab.Location = new System.Drawing.Point(4, 22);
             this.StandardSpawnstab.Name = "StandardSpawnstab";
             this.StandardSpawnstab.Padding = new System.Windows.Forms.Padding(3);
             this.StandardSpawnstab.Size = new System.Drawing.Size(768, 369);
             this.StandardSpawnstab.TabIndex = 0;
             this.StandardSpawnstab.Text = "StandardSpawns";
+            // 
+            // checknear
+            // 
+            this.checknear.Location = new System.Drawing.Point(598, 273);
+            this.checknear.Name = "checknear";
+            this.checknear.Size = new System.Drawing.Size(75, 23);
+            this.checknear.TabIndex = 22;
+            this.checknear.Text = "Check Near";
+            this.checknear.UseVisualStyleBackColor = true;
+            this.checknear.Click += new System.EventHandler(this.checknear_Click);
+            // 
+            // standardgroupid
+            // 
+            this.standardgroupid.FormattingEnabled = true;
+            this.standardgroupid.Location = new System.Drawing.Point(411, 18);
+            this.standardgroupid.Name = "standardgroupid";
+            this.standardgroupid.Size = new System.Drawing.Size(63, 21);
+            this.standardgroupid.TabIndex = 21;
+            this.standardgroupid.SelectedIndexChanged += new System.EventHandler(this.standardgroupid_SelectedIndexChanged);
             // 
             // calculatebutton
             // 
@@ -298,7 +335,7 @@ namespace PLARNGGui
             this.MaxAdvances.Name = "MaxAdvances";
             this.MaxAdvances.Size = new System.Drawing.Size(100, 20);
             this.MaxAdvances.TabIndex = 5;
-            this.MaxAdvances.Text = "50000";
+            this.MaxAdvances.Text = "50";
             // 
             // label2
             // 
@@ -326,18 +363,10 @@ namespace PLARNGGui
             this.label1.TabIndex = 2;
             this.label1.Text = "Group ID";
             // 
-            // groupid
-            // 
-            this.groupid.Location = new System.Drawing.Point(411, 18);
-            this.groupid.Name = "groupid";
-            this.groupid.Size = new System.Drawing.Size(63, 20);
-            this.groupid.TabIndex = 1;
-            this.groupid.Text = "0";
-            this.groupid.TextChanged += new System.EventHandler(this.groupid_TextChanged);
-            // 
             // Outbreaktab
             // 
             this.Outbreaktab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Outbreaktab.Controls.Add(this.AlphaSearch);
             this.Outbreaktab.Controls.Add(this.outbreakspawncount);
             this.Outbreaktab.Controls.Add(this.label16);
             this.Outbreaktab.Controls.Add(this.outbreakmap);
@@ -353,7 +382,6 @@ namespace PLARNGGui
             this.Outbreaktab.Controls.Add(this.label11);
             this.Outbreaktab.Controls.Add(this.outbreakread);
             this.Outbreaktab.Controls.Add(this.outbreakcalculate);
-            this.Outbreaktab.Controls.Add(this.AlphaSearch);
             this.Outbreaktab.Controls.Add(this.outbreakgroupid);
             this.Outbreaktab.Controls.Add(this.label10);
             this.Outbreaktab.Controls.Add(this.OutbreakDisplay);
@@ -363,6 +391,16 @@ namespace PLARNGGui
             this.Outbreaktab.Size = new System.Drawing.Size(768, 369);
             this.Outbreaktab.TabIndex = 1;
             this.Outbreaktab.Text = "Outbreaks";
+            // 
+            // AlphaSearch
+            // 
+            this.AlphaSearch.AutoSize = true;
+            this.AlphaSearch.Location = new System.Drawing.Point(668, 280);
+            this.AlphaSearch.Name = "AlphaSearch";
+            this.AlphaSearch.Size = new System.Drawing.Size(90, 17);
+            this.AlphaSearch.TabIndex = 19;
+            this.AlphaSearch.Text = "Alpha Search";
+            this.AlphaSearch.UseVisualStyleBackColor = true;
             // 
             // outbreakspawncount
             // 
@@ -496,17 +534,6 @@ namespace PLARNGGui
             this.outbreakcalculate.UseVisualStyleBackColor = true;
             this.outbreakcalculate.Click += new System.EventHandler(this.outbreakcalculate_Click);
             // 
-            // AlphaSearch
-            // 
-            this.AlphaSearch.AutoSize = true;
-            this.AlphaSearch.Location = new System.Drawing.Point(673, 278);
-            this.AlphaSearch.Name = "AlphaSearch";
-            this.AlphaSearch.Size = new System.Drawing.Size(89, 17);
-            this.AlphaSearch.TabIndex = 3;
-            this.AlphaSearch.TabStop = true;
-            this.AlphaSearch.Text = "Alpha Search";
-            this.AlphaSearch.UseVisualStyleBackColor = true;
-            // 
             // outbreakgroupid
             // 
             this.outbreakgroupid.Location = new System.Drawing.Point(430, 6);
@@ -537,6 +564,11 @@ namespace PLARNGGui
             // MMOtab
             // 
             this.MMOtab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.MMOtab.Controls.Add(this.Aggromap);
+            this.MMOtab.Controls.Add(this.label26);
+            this.MMOtab.Controls.Add(this.MMOSRs);
+            this.MMOtab.Controls.Add(this.label17);
+            this.MMOtab.Controls.Add(this.Aggro);
             this.MMOtab.Controls.Add(this.MassiveRead);
             this.MMOtab.Controls.Add(this.MassiveDisplay);
             this.MMOtab.Location = new System.Drawing.Point(4, 22);
@@ -545,6 +577,51 @@ namespace PLARNGGui
             this.MMOtab.Size = new System.Drawing.Size(768, 369);
             this.MMOtab.TabIndex = 2;
             this.MMOtab.Text = "Massive Outbreaks";
+            // 
+            // Aggromap
+            // 
+            this.Aggromap.FormattingEnabled = true;
+            this.Aggromap.Location = new System.Drawing.Point(536, 40);
+            this.Aggromap.Name = "Aggromap";
+            this.Aggromap.Size = new System.Drawing.Size(121, 21);
+            this.Aggromap.TabIndex = 8;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(385, 43);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(145, 13);
+            this.label26.TabIndex = 7;
+            this.label26.Text = "Aggressive Path Search Map";
+            // 
+            // MMOSRs
+            // 
+            this.MMOSRs.Location = new System.Drawing.Point(466, 6);
+            this.MMOSRs.Name = "MMOSRs";
+            this.MMOSRs.Size = new System.Drawing.Size(46, 20);
+            this.MMOSRs.TabIndex = 6;
+            this.MMOSRs.Text = "13";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(398, 9);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 13);
+            this.label17.TabIndex = 5;
+            this.label17.Text = "Shiny Rolls:";
+            // 
+            // Aggro
+            // 
+            this.Aggro.AutoSize = true;
+            this.Aggro.Location = new System.Drawing.Point(527, 265);
+            this.Aggro.Name = "Aggro";
+            this.Aggro.Size = new System.Drawing.Size(140, 17);
+            this.Aggro.TabIndex = 4;
+            this.Aggro.Text = "Aggressive Path Search";
+            this.Aggro.UseVisualStyleBackColor = true;
+            this.Aggro.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // MassiveRead
             // 
@@ -565,9 +642,53 @@ namespace PLARNGGui
             this.MassiveDisplay.TabIndex = 0;
             this.MassiveDisplay.Text = "";
             // 
+            // distortiontab
+            // 
+            this.distortiontab.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.distortiontab.Controls.Add(this.createdis);
+            this.distortiontab.Controls.Add(this.readalldisbutton);
+            this.distortiontab.Controls.Add(this.DistortionSRs);
+            this.distortiontab.Controls.Add(this.label28);
+            this.distortiontab.Controls.Add(this.distortionmap);
+            this.distortiontab.Controls.Add(this.label27);
+            this.distortiontab.Controls.Add(this.Distortiondisplay);
+            this.distortiontab.Location = new System.Drawing.Point(4, 22);
+            this.distortiontab.Name = "distortiontab";
+            this.distortiontab.Padding = new System.Windows.Forms.Padding(3);
+            this.distortiontab.Size = new System.Drawing.Size(768, 369);
+            this.distortiontab.TabIndex = 4;
+            this.distortiontab.Text = "Distortions";
+            // 
+            // distortionmap
+            // 
+            this.distortionmap.FormattingEnabled = true;
+            this.distortionmap.Location = new System.Drawing.Point(402, 6);
+            this.distortionmap.Name = "distortionmap";
+            this.distortionmap.Size = new System.Drawing.Size(119, 21);
+            this.distortionmap.TabIndex = 2;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(368, 9);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(28, 13);
+            this.label27.TabIndex = 1;
+            this.label27.Text = "Map";
+            // 
+            // Distortiondisplay
+            // 
+            this.Distortiondisplay.Location = new System.Drawing.Point(6, 6);
+            this.Distortiondisplay.Name = "Distortiondisplay";
+            this.Distortiondisplay.ReadOnly = true;
+            this.Distortiondisplay.Size = new System.Drawing.Size(356, 357);
+            this.Distortiondisplay.TabIndex = 0;
+            this.Distortiondisplay.Text = "";
+            // 
             // Teleporter
             // 
             this.Teleporter.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Teleporter.Controls.Add(this.pastureteleport);
             this.Teleporter.Controls.Add(this.campteleportbutton);
             this.Teleporter.Controls.Add(this.campreadbutton);
             this.Teleporter.Controls.Add(this.campz);
@@ -774,6 +895,53 @@ namespace PLARNGGui
             this.Disconnect.UseVisualStyleBackColor = true;
             this.Disconnect.Click += new System.EventHandler(this.Disconnect_Click);
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(368, 41);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(59, 13);
+            this.label28.TabIndex = 3;
+            this.label28.Text = "Shiny Rolls";
+            // 
+            // DistortionSRs
+            // 
+            this.DistortionSRs.Location = new System.Drawing.Point(433, 38);
+            this.DistortionSRs.Name = "DistortionSRs";
+            this.DistortionSRs.Size = new System.Drawing.Size(38, 20);
+            this.DistortionSRs.TabIndex = 4;
+            this.DistortionSRs.Text = "1";
+            // 
+            // readalldisbutton
+            // 
+            this.readalldisbutton.Location = new System.Drawing.Point(396, 208);
+            this.readalldisbutton.Name = "readalldisbutton";
+            this.readalldisbutton.Size = new System.Drawing.Size(125, 23);
+            this.readalldisbutton.TabIndex = 5;
+            this.readalldisbutton.Text = "Read All Distortions";
+            this.readalldisbutton.UseVisualStyleBackColor = true;
+            this.readalldisbutton.Click += new System.EventHandler(this.readalldisbutton_Click);
+            // 
+            // createdis
+            // 
+            this.createdis.Location = new System.Drawing.Point(568, 208);
+            this.createdis.Name = "createdis";
+            this.createdis.Size = new System.Drawing.Size(109, 23);
+            this.createdis.TabIndex = 6;
+            this.createdis.Text = "Create Distortion";
+            this.createdis.UseVisualStyleBackColor = true;
+            this.createdis.Click += new System.EventHandler(this.createdis_Click);
+            // 
+            // pastureteleport
+            // 
+            this.pastureteleport.Location = new System.Drawing.Point(562, 183);
+            this.pastureteleport.Name = "pastureteleport";
+            this.pastureteleport.Size = new System.Drawing.Size(106, 23);
+            this.pastureteleport.TabIndex = 18;
+            this.pastureteleport.Text = "Pasture Teleport";
+            this.pastureteleport.UseVisualStyleBackColor = true;
+            this.pastureteleport.Click += new System.EventHandler(this.pastureteleport_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -793,6 +961,9 @@ namespace PLARNGGui
             this.Outbreaktab.ResumeLayout(false);
             this.Outbreaktab.PerformLayout();
             this.MMOtab.ResumeLayout(false);
+            this.MMOtab.PerformLayout();
+            this.distortiontab.ResumeLayout(false);
+            this.distortiontab.PerformLayout();
             this.Teleporter.ResumeLayout(false);
             this.Teleporter.PerformLayout();
             this.ResumeLayout(false);
@@ -818,7 +989,6 @@ namespace PLARNGGui
         public System.Windows.Forms.Label label2;
         public System.Windows.Forms.TextBox SeedToInject;
         public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox groupid;
         public System.Windows.Forms.Button connect;
         public System.Windows.Forms.Button InjectStandard;
         public System.Windows.Forms.Label label7;
@@ -840,7 +1010,6 @@ namespace PLARNGGui
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         public System.Windows.Forms.TextBox outbreakseedtoinject;
-        public System.Windows.Forms.RadioButton AlphaSearch;
         public System.Windows.Forms.TextBox outbreakgroupid;
         public System.Windows.Forms.TextBox outbreakShinyrolls;
         public System.Windows.Forms.TextBox outbreakmaxadv;
@@ -870,6 +1039,23 @@ namespace PLARNGGui
         public System.Windows.Forms.TextBox Campx;
         public System.Windows.Forms.TextBox campy;
         public System.Windows.Forms.TextBox campz;
+        public System.Windows.Forms.CheckBox AlphaSearch;
+        public System.Windows.Forms.CheckBox Aggro;
+        public System.Windows.Forms.TextBox MMOSRs;
+        private System.Windows.Forms.Label label17;
+        public System.Windows.Forms.ComboBox Aggromap;
+        private System.Windows.Forms.Label label26;
+        public System.Windows.Forms.ComboBox standardgroupid;
+        private System.Windows.Forms.Button checknear;
+        private System.Windows.Forms.TabPage distortiontab;
+        public System.Windows.Forms.ComboBox distortionmap;
+        private System.Windows.Forms.Label label27;
+        public System.Windows.Forms.RichTextBox Distortiondisplay;
+        private System.Windows.Forms.Label label28;
+        public System.Windows.Forms.TextBox DistortionSRs;
+        public System.Windows.Forms.Button readalldisbutton;
+        public System.Windows.Forms.Button createdis;
+        private System.Windows.Forms.Button pastureteleport;
     }
 }
 
