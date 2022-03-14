@@ -61,7 +61,7 @@ namespace PLARNGGui
                         Program.main.MassiveDisplay.AppendText($"Coordinates: X: {spawncoordx} Y: {spawncoordy} Z: {spawncoordz}\n");
                         var groupseed = BitConverter.ToUInt64(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x44, 8).Result, 0);
                         var maxspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x4c, 4).Result, 0);
-                        var truebonusspawns = maxspawns + 3;
+                       
                         Program.main.MassiveDisplay.AppendText($"Max spawns: {maxspawns}\n");
                         var currspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x50, 4).Result, 0);
                         Program.main.MassiveDisplay.AppendText($"Current spawns: {currspawns}\n\n");
@@ -70,8 +70,8 @@ namespace PLARNGGui
                         if (Program.main.Aggro.Checked)
                         {
                             var truespawns = maxspawns;
-                            maxspawns = maxspawns + 3;
-                            aggressiveoutbreakpathfind(groupseed, shinyrolls, truebonusspawns, maxspawns, i, false);
+                            maxspawns += 3;
+                            var result = aggressiveoutbreakpathfind(groupseed, shinyrolls, maxspawns, truespawns, i, false);
                             continue;
                         }
                         var mainrng = new Xoroshiro128Plus(groupseed);
@@ -166,15 +166,138 @@ namespace PLARNGGui
                 }
             }
         }
-        public void aggressiveoutbreakpathfind(ulong groupseed, int rolls, int maxspawns, int truespawns, int groupid, bool bonusround)
+        public string[] aggressiveoutbreakpathfind(ulong groupseed, int rolls, int maxspawns, int truespawns, int groupid, bool bonusround, int step = 0, int[] steps = null, List<ulong> uniques =null, string[] storage =null)
         {
-            Dictionary<string, dynamic> encounters = new Dictionary<string, dynamic>();
+           SpawnerMMO[] encounters = new SpawnerMMO[0];
             int encsum = 0;
-            encsum = GetEncountersum(groupid, bonusround);
+            (encounters,encsum) = GetEncountersum(groupid, bonusround);
             var mainrng = new Xoroshiro128Plus(groupseed);
-
+            int[] _steps = null;
+            if(steps == null || uniques is null || storage is null)
+            {
+                steps = Array.Empty<int>();
+                uniques = new List<ulong>();
+                storage = Array.Empty<string>();
+            }
+            Array.Copy(steps, _steps,steps.Length);
+            if(step != 0)
+                _steps.Append(step);
+            if(steps.Sum() + step < maxspawns - 4)
+            {
+                for(int _step = 1; _step < Math.Min(5, maxspawns-4 - _steps.Sum()); _step++)
+                {
+                    if(aggressiveoutbreakpathfind(groupseed,rolls,maxspawns,truespawns,groupid,bonusround,_step,_steps) != Array.Empty<string>())
+                    {
+                        return storage;
+                    }
+                }
+            }
+            else
+            {
+                _steps.Append(maxspawns - _steps.Sum() - 4);
+                generatemassoutbreakaggressivepath(groupseed, rolls, _steps,ref uniques, ref storage, maxspawns, truespawns,encounters, encsum, bonusround);
+                if (_steps == getfinal(maxspawns))
+                    return storage;
+            }
+            return Array.Empty<string>();
         }
-        public int GetEncountersum(int groupid, bool bonus)
+
+        public int[] getfinal(int maxspawns)
+        {
+            return Array.Empty<int>();
+        }
+        public void generatemassoutbreakaggressivepath(ulong groupseed,int rolls,int [] steps, ref List<ulong> uniques,ref string[] storage,int maxspawns,int truespawns,SpawnerMMO[] encounters,int encsum,bool bonsuround)
+        {
+            bool shiny = false;
+            ulong encryption_constant = new ulong();
+            ulong pid = new ulong();
+            int[] ivs = new int[6];
+            ulong ability = new ulong();
+            ulong gender = new ulong();
+            ulong nature = new ulong();
+            ulong shinyseed = new ulong();
+            int guaranteedivs;
+            Species species;
+            bool alpha;
+            ulong generatorseed;
+            var mainrng = new Xoroshiro128Plus(groupseed);
+            for(int i = 1; i < 5; i++)
+            {
+                generatorseed = mainrng.Next();
+                mainrng.Next();
+                var fixedrng = new Xoroshiro128Plus(generatorseed);
+                var encounter_slot = fixedrng.Next() / Math.Pow(2, 64) * encsum;
+                (species, alpha) = getspecies(encounters, encounter_slot);
+                if (bonsuround && alpha)
+                    guaranteedivs = 4;
+                else if (bonsuround && !alpha)
+                    guaranteedivs = 3;
+                else
+                    guaranteedivs = 0;
+                var fixedseed = fixedrng.Next();
+                (shiny, encryption_constant, pid, ivs, ability, gender, nature, shinyseed) = Main.rngroutes.GenerateFromSeed(fixedseed, rolls, guaranteedivs);
+                if(shiny && !uniques.Contains(fixedseed))
+                {
+                    uniques.Add(fixedseed);
+                    storage.Append($"Initial Spawn {i}\nSpecies {species}\nShiny: {shiny}\nAlpha: {alpha}\nEC: {string.Format("{0:X}", encryption_constant)}\nPID: {string.Format("{0:X}", pid)}\nIVs: {ivs[0]}/{ivs[1]}/{ivs[2]}/{ivs[3]}/{ivs[4]}/{ivs[5]}\nAbility: {ability}\nGender: {gender}\nNature: {((Nature)nature)}\nShinySeed: {string.Format("0x{0:X}", generatorseed)}\n\n");
+                }
+            }
+            groupseed = mainrng.Next();
+            var respawnrng = new Xoroshiro128Plus(groupseed);
+            foreach(var step in steps)
+            {
+                for(int i = 1; i < step + 1; i++)
+                {
+                    generatorseed = respawnrng.Next();
+                    respawnrng.Next();
+                    var fixedrng = new Xoroshiro128Plus(generatorseed);
+                    var encounter_slot = fixedrng.Next() / Math.Pow(2, 64) * encsum;
+                    (species, alpha) = getspecies(encounters, encounter_slot);
+                    if (bonsuround && alpha)
+                        guaranteedivs = 4;
+                    else if (bonsuround && !alpha)
+                        guaranteedivs = 3;
+                    else
+                        guaranteedivs = 0;
+                    var fixedseed = fixedrng.Next();
+                    var indy = Array.IndexOf(steps, step);
+                    int sum = 0;
+                    for (int u = 0; u < indy; u++)
+                        sum += steps[u];
+                    (shiny, encryption_constant, pid, ivs, ability, gender, nature, shinyseed) = Main.rngroutes.GenerateFromSeed(fixedseed, rolls, guaranteedivs);
+                    if (shiny && !uniques.Contains(fixedseed) && sum + i + 4 <= truespawns)
+                    {
+                        string paths = "";
+                        for (int u = 0; u < indy; u++)
+                            paths += steps[u].ToString() + "|";
+
+                        uniques.Add(fixedseed);
+                        storage.Append($"Initial Spawn {i}\nSpecies {species}\nPath: {paths}Shiny: {shiny}\nAlpha: {alpha}\nEC: {string.Format("{0:X}", encryption_constant)}\nPID: {string.Format("{0:X}", pid)}\nIVs: {ivs[0]}/{ivs[1]}/{ivs[2]}/{ivs[3]}/{ivs[4]}/{ivs[5]}\nAbility: {ability}\nGender: {gender}\nNature: {((Nature)nature)}\nShinySeed: {string.Format("0x{0:X}", generatorseed)}\n\n");
+                    }
+                }
+                respawnrng.Next();
+            }
+        }
+
+        public (Species,bool) getspecies(SpawnerMMO[]encounters,double encounter_slot)
+        {
+            
+            Species slot;
+            int encsum = 0;
+            bool alpha = false;
+            foreach(var species in encounters)
+            {
+                encsum += species.Slot;
+                if(encounter_slot < encsum)
+                {
+                    alpha = species.Alpha;
+                    slot = species.Name;
+                    return (slot,alpha);
+                }
+            }
+            return (Species.None, false);
+        }
+        public (SpawnerMMO[], int) GetEncountersum(int groupid, bool bonus)
         {
             var pointer = new long[5];
             if (bonus)
@@ -188,6 +311,7 @@ namespace PLARNGGui
             var MMOSpawnersjson = new WebClient().DownloadString($"https://raw.githubusercontent.com/capitalism-sudo/PyNXReader/master/resources/mmo_es.json");
             mmoslots = JsonConvert.DeserializeObject<Dictionary<string, SpawnerMMO[]>>(MMOSpawnersjson);
             int encmax = 0;
+            var encounters = mmoslots[enclong];
             foreach (var keyValuePair in mmoslots)
             {
                 if (keyValuePair.Key == enclong)
@@ -200,7 +324,7 @@ namespace PLARNGGui
                     }
                 }
             }
-            return encmax;
+            return (encounters,encmax);
         }
 
         public class SpawnerMMO
