@@ -221,10 +221,9 @@ namespace PLARNGGui
             var doubleCoordZ = float.Parse(Program.main.CoordZ.Text);
             
             byte[] Z = BitConverter.GetBytes(doubleCoordZ);
-
-            await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
-            await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
-            await routes.WriteBytesAbsoluteAsync(Z, playerlocationoff + 0x8);
+            var XYZ = X.Concat(Y).ToArray();
+            XYZ = XYZ.Concat(Z).ToArray();
+            await routes.WriteBytesAbsoluteAsync(XYZ, playerlocationoff);
         }
 
         private async void campreadbutton_Click(object sender, EventArgs e)
@@ -249,10 +248,9 @@ namespace PLARNGGui
             byte[] Y = BitConverter.GetBytes(CoordY);
             var CoordZ = float.Parse(Program.main.campz.Text);
             byte[] Z = BitConverter.GetBytes(CoordZ);
-
-            await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
-            await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
-            await routes.WriteBytesAbsoluteAsync(Z, playerlocationoff + 0x8);
+            var XYZ = X.Concat(Y).ToArray();
+            XYZ = XYZ.Concat(Z).ToArray();
+            await routes.WriteBytesAbsoluteAsync(XYZ, playerlocationoff);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -308,10 +306,10 @@ namespace PLARNGGui
             byte[] Y = BitConverter.GetBytes(CoordY);
             var CoordZ = float.Parse("490.6487");
             byte[] Z = BitConverter.GetBytes(CoordZ);
-
-            await routes.WriteBytesAbsoluteAsync(X, playerlocationoff);
-            await routes.WriteBytesAbsoluteAsync(Y, playerlocationoff + 0x4);
-            await routes.WriteBytesAbsoluteAsync(Z, playerlocationoff + 0x8);
+           var XYZ = X.Concat(Y).ToArray();
+            XYZ = XYZ.Concat(Z).ToArray();
+            await routes.WriteBytesAbsoluteAsync(XYZ, playerlocationoff);
+            
         }
     }
 }

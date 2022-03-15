@@ -72,6 +72,34 @@ namespace PLARNGGui
                             var truespawns = maxspawns;
                             maxspawns += 3;
                             var result = aggressiveoutbreakpathfind(groupseed, shinyrolls, maxspawns, truespawns, i, false);
+                            foreach (var item in result)
+                                Program.main.MassiveDisplay.AppendText(item);
+                            if(bonusround == 1)
+                            {
+                                bool isbonus = true;
+                                Program.main.MassiveDisplay.AppendText("Bonus Round");
+                                truespawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x4c, 4).Result, 0);
+                                var extracount = truespawns;
+                                maxspawns = truespawns + 4;
+                                groupseed = BitConverter.ToUInt64(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x44, 8).Result, 0);
+                                var bonusseed = nextfilteredaggressiveoutbreakpathfindseed(groupseed, shinyrolls, maxspawns, truespawns, i, isbonus, groupseed, false);
+                                truespawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x60, 4).Result, 0);
+                                maxspawns = 10;
+                                int s = 0;
+                                foreach(var val in bonusseed)
+                                {
+                                    var seed = getbonusseed(s, shinyrolls, l, val);
+                                    var extras = extracount - val.Sum();
+                                    var extra = new int[extras];
+                                    for (int c = 0; c < extra.Length; c++)
+                                        extra[c] = 1;
+                                    var nonalpha = aggressiveoutbreakpathfind(seed, shinyrolls, maxspawns, truespawns, i, isbonus);
+                                    foreach(var idk in nonalpha)
+                                    {
+                                        Program.main.MassiveDisplay.AppendText(idk);
+                                    }
+                                }
+                            }
                             continue;
                         }
                         var mainrng = new Xoroshiro128Plus(groupseed);
@@ -155,14 +183,108 @@ namespace PLARNGGui
                                     Program.main.CoordX.Text = $"{spawncoordx}"; Program.main.CoordY.Text = $"{spawncoordy}"; Program.main.CoordZ.Text = $"{spawncoordz}";
                                 }
                             }
-                            if (Program.main.Aggro.Checked)
-                            {
-                                groupseed = BitConverter.ToUInt64(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x44, 8).Result, 0);
-                            }
+                           
                         }
 
                     }
 
+                }
+            }
+        }
+
+        public HashSet<int[]> nextfilteredaggressiveoutbreakpathfindseed(ulong groupseed, int rolls, int spawns, int truespawns, int groupid, bool isbonus, ulong trueseed, bool alpha, int step = 0, int[] steps = null, HashSet<int[]> uniques = null, string[] storage = null)
+        {
+            SpawnerMMO[] encounters = new SpawnerMMO[0];
+            int encsum = 0;
+            (encounters, encsum) = GetEncountersum(groupid, isbonus);
+            var main_rng = new Xoroshiro128Plus(groupseed);
+            int[] _steps = null;
+            if (steps == null || uniques is null || storage is null)
+            {
+                steps = Array.Empty<int>();
+                uniques = new HashSet<int[]>();
+                storage = Array.Empty<string>();
+            }
+            Array.Copy(steps, _steps, steps.Length);
+            if (step != 0)
+                _steps.Append(step);
+            if (steps.Sum() + step < spawns - 4)
+            {
+                for (int _step = 1; _step < Math.Min(5, spawns - 4 - _steps.Sum()); _step++)
+                {
+                    if (nextfilteredaggressiveoutbreakpathfindseed(groupseed, rolls, spawns, truespawns, groupid, isbonus,trueseed,alpha, _step, _steps) != new HashSet<int[]>())
+                    {
+                        return uniques;
+                    }
+                }
+            }
+            else
+            {
+                _steps.Append(spawns - _steps.Sum() - 4);
+                generatemassoutbreakaggressivepathseed(groupseed, rolls, _steps, ref uniques, ref storage, spawns, truespawns, encounters, encsum,trueseed, isbonus);
+                if (_steps == getfinal(spawns))
+                    return uniques;
+            }
+            return new HashSet<int[]>();
+
+        }
+
+        public void generatemassoutbreakaggressivepathseed(ulong groupseed,int rolls, int[] _steps,ref HashSet<int[]> uniques,ref string[] storage,int spawns,int truespawns,SpawnerMMO[] encounters,int encsum,ulong trueseed,bool isbonus)
+        {
+            int[] pokemon = new int[0];
+            int guaranteedivs;
+            Species species;
+            bool alpha;
+            var respawns = truespawns - 4;
+            var mainrng = new Xoroshiro128Plus(groupseed);
+            for(int i = 0; i < 4; i++)
+            {
+                var generatorseed = mainrng.Next();
+                mainrng.Next();
+                var fixedrng = new Xoroshiro128Plus(generatorseed);
+                var encounter_slot = fixedrng.Next() / Math.Pow(2, 64) * encsum;
+                (species, alpha) = getspecies(encounters, encounter_slot);
+                if (isbonus && alpha)
+                    guaranteedivs = 4;
+                else if (isbonus && !alpha)
+                    guaranteedivs = 3;
+                else
+                    guaranteedivs = 0;
+                var fixedseed = fixedrng.Next();
+            }
+            groupseed = mainrng.Next();
+            var respawnrng = new Xoroshiro128Plus(groupseed);
+            var bonusseed = respawnrng;
+            foreach(var step in _steps)
+            {
+                for(int k = 1; k<step + 1; k++)
+                {
+                    var generatorseed = respawnrng.Next();
+                    respawnrng.Next();
+                    var fixedrng = new Xoroshiro128Plus(generatorseed);
+                    var encounter_slot = fixedrng.Next() / Math.Pow(2, 64) * encsum;
+                    (species, alpha) = getspecies(encounters, encounter_slot);
+                    if (isbonus && alpha)
+                        guaranteedivs = 4;
+                    else if (isbonus && !alpha)
+                        guaranteedivs = 3;
+                    else
+                        guaranteedivs = 0;
+                    fixedrng.Next();
+                    fixedrng.Next();
+                    pokemon.Append(k);
+                }
+                respawnrng = new Xoroshiro128Plus( respawnrng.Next());
+                bonusseed.Next();
+                var indy = Array.IndexOf(_steps, step);
+                int sum = 0;
+                for (int u = 0; u < indy; u++)
+                    sum += _steps[u];
+                int[] secondstep = new int[0];
+                _steps.CopyTo(secondstep, indy);
+                if (!uniques.Contains(secondstep.Concat(pokemon).ToArray()) && (sum + pokemon.Sum()) - respawns >=0 && sum - respawns < 0 )
+                {
+                    uniques.Add(secondstep.Concat(pokemon).ToArray());
                 }
             }
         }
@@ -172,8 +294,8 @@ namespace PLARNGGui
             int encsum = 0;
             (encounters,encsum) = GetEncountersum(groupid, bonusround);
             var mainrng = new Xoroshiro128Plus(groupseed);
-            int[] _steps = null;
-            if(steps == null || uniques is null || storage is null)
+            int[] _steps = Array.Empty<int>();
+            if(steps == null || uniques == null || storage == null)
             {
                 steps = Array.Empty<int>();
                 uniques = new List<ulong>();
@@ -204,6 +326,12 @@ namespace PLARNGGui
 
         public int[] getfinal(int maxspawns)
         {
+            maxspawns -= 4;
+            int[] finalpath = new int[maxspawns/4];
+            for (int i = 0; i < finalpath.Length; i++)
+                finalpath[i] = 4;
+            if (maxspawns % 4 != 0)
+                finalpath.Append(maxspawns % 4);
             return Array.Empty<int>();
         }
         public void generatemassoutbreakaggressivepath(ulong groupseed,int rolls,int [] steps, ref List<ulong> uniques,ref string[] storage,int maxspawns,int truespawns,SpawnerMMO[] encounters,int encsum,bool bonsuround)
@@ -308,25 +436,71 @@ namespace PLARNGGui
                 pointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (groupid * 0x90) + (0xb80 * (int)(Enums.Maps)Program.main.Aggromap.SelectedItem) + 0x24 };
             var pointeroff = Main.routes.PointerAll(pointer).Result;
             var enclong = "0x" + BitConverter.ToUInt64(Main.routes.ReadBytesAbsoluteAsync(pointeroff, 8).Result, 0).ToString().ToUpper();
-            var MMOSpawnersjson = new WebClient().DownloadString($"https://raw.githubusercontent.com/capitalism-sudo/PyNXReader/master/resources/mmo_es.json");
+            var MMOSpawnersjson = new WebClient().DownloadString($"https://raw.githubusercontent.com/zyro670/JS-Finder/notabranch/Resources/pla_spawners/jsons/massivemassoutbreaks.json");
             mmoslots = JsonConvert.DeserializeObject<Dictionary<string, SpawnerMMO[]>>(MMOSpawnersjson);
             int encmax = 0;
-            var encounters = mmoslots[enclong];
-            foreach (var keyValuePair in mmoslots)
+            try
             {
-                if (keyValuePair.Key == enclong)
+                var encounters = mmoslots[enclong];
+                foreach (var keyValuePair in mmoslots)
                 {
-
-                    foreach (var keyValue in keyValuePair.Value)
+                    if (keyValuePair.Key == enclong)
                     {
-                        encmax += keyValue.Slot;
 
+                        foreach (var keyValue in keyValuePair.Value)
+                        {
+                            encmax += keyValue.Slot;
+
+                        }
                     }
                 }
+                return (encounters, encmax);
             }
-            return (encounters,encmax);
+            catch { return (null, 0); }
         }
+        public ulong getbonusseed(int groupid,int rolls, int map,int[] paths)
+        {
+            var outbreakpointer = new long[] { 0x42BA6B0, 0x2B0, 0x58, 0x18, 0x1d4 + (groupid * 0x90) + (0xB80 * map) };
+            var Outbreakoff = Main.routes.PointerAll(outbreakpointer).Result;
+            int species = BitConverter.ToUInt16(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff, 2).Result, 0);
+            if (species != 0)
+            {
+                if (species == 201)
+                    rolls = 19;
+                var groupseed = BitConverter.ToUInt64(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x44, 8).Result, 0);
+                var maxspawns = BitConverter.ToInt32(Main.routes.ReadBytesAbsoluteAsync(Outbreakoff + 0x4c, 4).Result, 0);
+                var mainrng = new Xoroshiro128Plus(groupseed);
+                for(int b = 0; b < 4; b++)
+                {
+                    var generatorseed = mainrng.Next();
+                    mainrng.Next();
+                    var fixedrng = new Xoroshiro128Plus(generatorseed);
+                    fixedrng.Next();
+                    var fixedseed = fixedrng.Next();
+                }
+                groupseed = mainrng.Next();
+                mainrng = new Xoroshiro128Plus(groupseed);
+                var respawnrng = new Xoroshiro128Plus(groupseed);
+                ulong generatorseeds;
+                foreach(var path in paths)
+                {
+                    for(int pokemon = 0; pokemon < path; pokemon++)
+                    {
+                        generatorseeds = respawnrng.Next();
+                        var tempseed = respawnrng.Next();
+                        var fixerng = new Xoroshiro128Plus(generatorseeds);
+                        fixerng.Next();
+                        var fixerseed = fixerng.Next();
+                        fixerseed = fixerng.Next();
+                    }
+                    respawnrng.Next();
+                }
+                var bonusseed = (respawnrng.Next() - 0x82A2B175229D6A5B) & 0xFFFFFFFFFFFFFFFF;
+                return bonusseed;
 
+            }
+            return 0x0;
+        }
         public class SpawnerMMO
         {
             public int Slot { get; set; }
